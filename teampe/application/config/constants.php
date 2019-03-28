@@ -86,7 +86,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 // 데이터베이스
 defined('DB_HOST')      OR define('DB_HOST', "mysql");
-defined('DB_NAME')      OR define('DB_NAME', "couponvill");
+defined('DB_NAME')      OR define('DB_NAME', "teampe");
 defined('DB_USER')      OR define('DB_USER', "root");
 defined('DB_PWD')      OR define('DB_PWD', "password");
 

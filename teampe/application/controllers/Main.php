@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/Base.php";
 
-class Splash extends Base
+class Main extends Base
 {
     function __construct()
     {
@@ -11,7 +11,6 @@ class Splash extends Base
 
     public function index()
     {
-        $this->load_view('splash');
+        $this->load_view('main');
     }
-    
 }

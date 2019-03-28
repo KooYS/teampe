@@ -4,7 +4,7 @@
 <style>
 
     .splash{
-        background: url("<?=base_url()?>assets/images/splash/splash.svg") no-repeat center;
+        background: url("<?=base_url()?>assets/images/main/NewLogo.png") no-repeat center;
         background-size: cover;
         position: absolute;
         top: 50%; right: 50%;
@@ -27,7 +27,7 @@
 <script>
 
     $(document).ready(function () {
-       setTimeout('go2Main()', 3000);
+       
     })
 
 </script>
