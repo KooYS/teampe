@@ -3,5 +3,5 @@ function loadPage($url) {
 }
 
 function go2Main() {
-    loadPage(site_url + '/Main');
+    loadPage(site_url + '/Login');
 }

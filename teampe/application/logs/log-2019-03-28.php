@@ -19,3 +19,6 @@ ERROR - 2019-03-28 08:01:43 --> Unable to connect to the database
 ERROR - 2019-03-28 08:01:43 --> Severity: Warning --> Cannot modify header information - headers already sent by (output started at /app/teampe/system/core/Exceptions.php:271) /app/teampe/system/core/Common.php 570
 ERROR - 2019-03-28 08:17:20 --> 404 Page Not Found: Test/index
 ERROR - 2019-03-28 08:17:40 --> 404 Page Not Found: Test/detail
+ERROR - 2019-03-28 12:55:17 --> 404 Page Not Found: Login/index
+ERROR - 2019-03-28 13:01:24 --> 404 Page Not Found: 0/index
+ERROR - 2019-03-28 13:02:11 --> 404 Page Not Found: 0/index
