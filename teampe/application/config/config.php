@@ -23,8 +23,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+
 #$config['base_url'] = 'https://couponvill.com/user';
-$config['base_url'] = 'http://localhost:22222/teampe';
+// $config['base_url'] = 'http://localhost:22222/teampe';
+$config['base_url'] = 'http://220.76.231.36:22222/teampe';
 //$config['base_url'] = 'http://180.70.51.26:33333/user';
 //$config['base_url'] = 'http://112.171.53.22:33333/user';
 //$config['base_url'] = 'http://175.206.188.87:33333/user';

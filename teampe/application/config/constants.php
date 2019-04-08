@@ -92,9 +92,9 @@ defined('DB_PWD')      OR define('DB_PWD', "password");
 
 defined('SESSION_USR_UID')      OR define('SESSION_USR_UID', 'session_usr_uid');
 defined('SESSION_USR_ID')      OR define('SESSION_USR_ID', 'session_usr_id');
-defined('SESSION_USR_PLACE')      OR define('SESSION_USR_PLACE', 'session_usr_place');
-defined('SESSION_USR_LAT')      OR define('SESSION_USR_LAT', 'session_usr_lat');
-defined('SESSION_USR_LON')      OR define('SESSION_USR_LON', 'session_usr_lon');
+defined('SESSION_USR_NAME')      OR define('SESSION_USR_NAME', 'session_usr_name');
+defined('SESSION_USR_IMG')      OR define('SESSION_USR_IMG', 'session_usr_img');
+
 
 defined('UPLOAD_PATH')                  OR define('UPLOAD_PATH', dirname(__DIR__) . "/../../upload/");   // upload dir path
 
