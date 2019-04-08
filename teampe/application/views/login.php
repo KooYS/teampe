@@ -115,9 +115,36 @@
                 $("#login_name").val(res["nickName"]);
                 $("#login_img").val(res["thumbnailURL"]);
 
+<<<<<<< HEAD
                 $("#form_kakao_login").submit();
 
                
+=======
+                var data = "{\"uid\":\""+$('#login_id').val()+"\",\"name\":\""+$('#login_name').val()+"\",\"avatar\":\""+$('#login_img').val()+"\"}";
+                var xhr = new XMLHttpRequest();
+
+                xhr.addEventListener("readystatechange", function () {
+                  if (this.readyState === this.DONE) {
+
+                    if( this.responseText.includes("The uid has already been taken")){
+                      $("#form_kakao_login").submit();
+                    }
+                  }
+                });
+                 xhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                      $("#form_kakao_login").submit();
+                   }
+                };
+
+                xhr.open("POST", "https://api.cometchat.com/v1/users");
+                xhr.setRequestHeader("apikey", "84b96e4004510e351c4af755d45f68d313dcdc49");
+                xhr.setRequestHeader("appid", "1508b4a5c0be73");
+                xhr.setRequestHeader("content-type", "application/json");
+
+                xhr.send(data);
+
+>>>>>>> 0d70b5b63fb00ff82fcf24870b9f2631e5a7d3ca
               },
               fail: function(error) {
                 alert(JSON.stringify(error));
@@ -143,6 +170,38 @@
     })
 
 
+<<<<<<< HEAD
+=======
+    window.onload = (function () {
+   var apiKey = "84b96e4004510e351c4af755d45f68d313dcdc49";
+      var appId = "1508b4a5c0be73";
+      
+      var mycomechat = CometChat.init(appId).then(
+       hasInitialized => {
+        console.log("Initialization completed successfully", hasInitialized);
+        //You can now call login function.
+
+        CometChat.login('<?=$this->session->userdata(SESSION_USR_ID)?>', apiKey).then(
+          User => {
+            console.log("Login Successful:", { User });
+          },
+          error => {
+            console.log("Login failed with exception:", { error });
+          }
+        );
+
+
+       },
+       error => {
+        console.log("Initialization failed with error:", error);
+        //Check the reason for error and take apppropriate action.
+       }
+      );
+
+
+      
+ });
+>>>>>>> 0d70b5b63fb00ff82fcf24870b9f2631e5a7d3ca
     
 
 </script>
