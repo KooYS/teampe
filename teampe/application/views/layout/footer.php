@@ -9,6 +9,14 @@
 
 
 <style>
+	@font-face {
+       font-family: 'Noto Sans KR';
+       font-style: normal;
+       font-weight: 500;
+       src: url(/fonts/NotoSansKr/NotoSansKR-Medium.woff2) format('woff2'),
+            url(/fonts/NotoSansKr/NotoSansKR-Medium.woff) format('woff'),
+            url(/fonts/NotoSansKr/NotoSansKR-Medium.otf) format('opentype');
+ 	}
 	.mypopup-bg{
 		position: fixed;
 	    top: 0;
@@ -34,6 +42,9 @@
 	    font-size: 16px;
 	    text-align: center;
 	    position: relative;
+	    font-family: Noto Sans KR;
+	    font-weight: bold;
+	    color: #0a85d7;
 	}
 
 	.mypopup .popup-content {
@@ -42,6 +53,24 @@
 	    text-align: center;
 	    margin-top: 20px;
 	    margin-bottom: 20px;
+	    font-family: Noto Sans KR;
+	    font-weight: bold;
+	    color: #0a85d7;
+	}
+
+	.mypopup .popup-text {
+		color: #555555;
+		border-radius: 12px;
+		background-color: #e5e5e5;
+        border: solid;
+        border-color: #ffffff;
+	}
+	.mypopup .popup-ok {
+		font-size: 16px;
+	    text-align: center;
+	    font-family: Noto Sans KR;
+	    font-weight: bold;
+	    color: #0a85d7;
 	}
 
 </style>
@@ -52,10 +81,9 @@
         <div class="popup-title">방만들기</div>
         <div class="popup-content">
         	<span>제목 : </span>
-        	<input type="text" id="make_room_title"></input>
-        </div>
-         <div class="form-group" style="text-align: center;">
-            <a class="" onclick="onMakeRoom()">확인</a>
+        	<input class="popup-text" type="text" id="make_room_title"></input>
+        	<a class="popup-ok" onclick="onMakeRoom()">OK</a>
+
         </div>
     </div>
 </div>

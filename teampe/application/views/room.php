@@ -2,18 +2,55 @@
 
 ?>
 
+<head>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <style>
+
+@font-face {
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    src: url(/fonts/NotoSansKr/NotoSansKR-Medium.woff2) format('woff2'),
+         url(/fonts/NotoSansKr/NotoSansKR-Medium.woff) format('woff'),
+         url(/fonts/NotoSansKr/NotoSansKR-Medium.otf) format('opentype');
+       }
+
+.profile{
+    background-image: linear-gradient(to right,#147dd9,#3f4a9c); 
+    position: relative;
+    height: 90px;
+  }
+.pro_img{
+    border-radius: 50%;
+    margin-left: 10px;
+    width: 60px;
+    border: solid;
+    border-color: #ffffff;
+    margin:15px;
+    }
+.profile .nickname{
+    color: #ffffff;
+    top: 50%;
+    margin-left: -15px;
+    transform: translate(50%,-50%);
+    position: absolute;
+    font-family: Noto Sans KR;
+    }
+
 .sidenav {
 	height: 100%;
 	width: 0;
 	position: fixed;
 	top: 0;
 	left: 0;
-	background-color: #111;
-	overflow-x: hidden;
-	transition: 0.5s;
-	padding-top: 60px;
-	z-index: 10001;
+  background-color: #f3f5fa;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  z-index: 10001;
 }
 
 .sidenav_overlay{
@@ -32,14 +69,16 @@
 .sidenav a {
 	padding: 8px 8px 8px 32px;
 	text-decoration: none;
-	font-size: 25px;
-	color: #818181;
-	display: block;
-	transition: 0.3s;
+	font-size: 20px;
+  color: #315bb0;
+  display: block;
+  transition: 0.3s;
+  background-color: #f3f5fa;
 }
 
 .sidenav a:hover {
-	color: #f1f1f1;
+  color: #ffffff;
+  background-color: #315bb0;
 }
 
 .sidenav .closebtn {
@@ -50,27 +89,110 @@
 	margin-left: 50px;
 }
 
+.menu{
+        font-size:25px;
+        cursor:pointer;
+        color:#ffffff;
+        margin-left: 15px;
+        vertical-align: center;
+        top: 50%;
+
+    }
+
+.material-icons.add{
+    font-size: 36px;
+    color: #3f4a9c;
+}
+
+.material-icons.pi{
+        color: #ffffff;
+        font-size: 20px;
+        right: 23%;
+        bottom: 40%;
+        position: absolute;
+}
+
+.material-icons.ni{
+    color: #ffffff;
+    font-size: 20px;
+    right: 15%;
+    bottom: 40%;
+    position: absolute;
+}
+
+.material-icons.bi{
+    color: #ffffff;
+    font-size: 20px;
+    right: 7%;
+    bottom: 40%;
+    position: absolute;
+}
+.footer{
+  position:absolute;
+  bottom: 0;
+  width:100%;
+
+
+}
+
+.chat_text {
+
+  color: #555555;
+  border-radius: 12px;
+  background-color: #e5e5e5;
+    border: solid;
+    border-color: #ffffff;
+
+}
+
+.ok_btn {
+  font-size: 14px;
+  text-align: center;
+  font-family: Noto Sans KR;
+  font-weight: bold;
+  color: #0a85d7; 
+  border-color: #ffffff;
+  background-color: #ffffff;
+
+}
+
+.list{
+
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
 </style>
+</head>
 
 
+  <div class="profile">
 	<div class="sidenav_overlay" onclick="closeNav()"></div>
 	<div id="mySidenav" class="sidenav">
-	  <a href="<?=base_url()?>index.php/MyFunction/index/1">메뉴1</a>
-	  <a href="<?=base_url()?>index.php/MyFunction/index/2">메뉴2</a>
-	  <a href="<?=base_url()?>index.php/MyFunction/index/3">메뉴3</a>
-	  <a href="<?=base_url()?>index.php/MyFunction/index/4">메뉴4</a>
+	  <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
+	  <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
+	  <a href="<?=base_url()?>index.php/MyFunction/index/3">자료공유</a>
+	  <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
 	</div>
 	
 
-	<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  <span class="menu" onclick="openNav()">&#9776;</span>
+  <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
+    <span class="nickname"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
+    <i class="material-icons pi">person_add</i>
+    <i class="material-icons ni">notifications_none</i>
+    <i class="material-icons bi">keyboard_backspace</i>
+  </div>
+
 
 
 	<div class="list"></div>
-	<input type="text" name="" id="chat"><button id="go">전송</button>
+  <div class="footer">
+    <input class="chat_text" type="text" placeholder="message..." name="" id="chat"><button class="ok_btn" id="go">보내기</button>
+
+  </div>
 
 
 	<button id="authorize_button" style="display: none;">Authorize</button>
@@ -216,10 +338,10 @@
     		var y = today.getFullYear();
     		var Month = ("0" + (today.getMonth() + 1)).slice(-2) ;
     		var d = ("0" + today.getDate()).slice(-2) ;
-			var h = ("0" + today.getHours()).slice(-2) ;
-			var m = ("0" + today.getMinutes()).slice(-2) ;
-			var s = ("0" + today.getSeconds()).slice(-2) ;
-			var timestamp = y + "-" + Month  + "-" + d + "-" + h + ":" + m + ":" + s;
+  			var h = ("0" + today.getHours()).slice(-2) ;
+  			var m = ("0" + today.getMinutes()).slice(-2) ;
+  			var s = ("0" + today.getSeconds()).slice(-2) ;
+  			var timestamp = y + "-" + Month  + "-" + d + "-" + h + ":" + m + ":" + s;
 
     		var ref_data = '<?=$현재방->uid?>/'+timestamp+'/'+escape("<?=$this->session->userdata(SESSION_USR_NAME)?>");
 

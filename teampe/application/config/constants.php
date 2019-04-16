@@ -85,10 +85,10 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 // 데이터베이스
-defined('DB_HOST')      OR define('DB_HOST', "mysql");
+defined('DB_HOST')      OR define('DB_HOST', "localhost:8889");
 defined('DB_NAME')      OR define('DB_NAME', "teampe");
 defined('DB_USER')      OR define('DB_USER', "root");
-defined('DB_PWD')      OR define('DB_PWD', "password");
+defined('DB_PWD')      OR define('DB_PWD', "root");
 
 defined('SESSION_USR_UID')      OR define('SESSION_USR_UID', 'session_usr_uid');
 defined('SESSION_USR_ID')      OR define('SESSION_USR_ID', 'session_usr_id');
