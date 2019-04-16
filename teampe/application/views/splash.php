@@ -4,12 +4,12 @@
 <style>
 
     .splash{
-        background: url("<?=base_url()?>assets/images/splash/splash.svg") no-repeat center;
+        background: url("<?=base_url()?>assets/images/splash/splash.png") no-repeat center;
         background-size: cover;
         position: absolute;
         top: 50%; right: 50%;
         transform: translate(50%,-50%);
-        height: 140px;
+        height: 100%;
         width: 100%;
     }
 </style>

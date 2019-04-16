@@ -4,7 +4,7 @@ if($roomNum != "")
   $param = $roomNum;
 else
   $param = "0";
-$kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id="."c47884e2681e2a2a01b8e140dbc21ffb"."&redirect_uri=".urlencode(base_url()."index.php/Login/kakao_login")."&response_type=code&state=".$param;
+$kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id="."3db0ef82cfa5221c3278986f53496948"."&redirect_uri=".urlencode(base_url()."index.php/Login/kakao_login")."&response_type=code&state=".$param;
 
 ?>
 
@@ -41,12 +41,12 @@ $kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id="."c47884e268
       margin-left: -15px;
       margin-top: -15px;
       position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transform: -webkit-translate(-50%, -50%);
-    transform: -moz-translate(-50%, -50%);
-    transform: -ms-translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transform: -webkit-translate(-50%, -50%);
+      transform: -moz-translate(-50%, -50%);
+      transform: -ms-translate(-50%, -50%);
 
       border: 6px solid #f3f3f3;
       border-radius: 50%;
@@ -55,6 +55,25 @@ $kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id="."c47884e268
       height: 30px;
       -webkit-animation: spin 2s linear infinite; /* Safari */
       animation: spin 2s linear infinite;
+    }
+
+    .login_btn {
+      left: 50%;
+      bottom: 25%;
+      transform: translate(-50%,50%);
+      position: absolute;
+      z-index: 2;
+
+    }
+    .splash{
+        background: url("<?=base_url()?>assets/images/main/login.png") no-repeat center;
+        background-size: cover;
+        position: absolute;
+        top: 50%; right: 50%;
+        transform: translate(50%,-50%);
+        height: 100%;
+        width: 100%;
+        z-index: 1;
     }
 
     /* Safari */
@@ -70,11 +89,23 @@ $kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id="."c47884e268
 
 </style>
 
+<!-- Views-->
+
+<div class="views">
+    <div class="view view-main splash">
+        <div class="pages">
+            <div class="page splash" data-page="splash">
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <div class="waiting" style="display: none;"><div class="loader"></div></div>
-
-<a href="<?=$kakao_apiURL;?>"><img src="https://kauth.kakao.com/public/widget/login/kr/kr_02_medium.png"></a>
+<a class="login_btn" id="kakao-login-btn"></a>
+<a href="http://developers.kakao.com/logout"></a>
+<a class="login_btn" href="<?=$kakao_apiURL;?>"><img src="https://kauth.kakao.com/public/widget/login/kr/kr_02_medium.png"></a>
 
 
 <script>
