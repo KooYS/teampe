@@ -31,7 +31,6 @@
     <script type="text/javascript" src="<?= base_url() ?>assets/plugins/clipboardjs/clipboard.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>assets/plugins/raty-fa/jquery.raty-fa.js"></script>
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>    
-    <script type="text/javascript" src="https://unpkg.com/@cometchat-pro/chat@1.3.0/CometChat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
 
     <script>
