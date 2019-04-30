@@ -4,7 +4,7 @@ if($roomNum != "")
   $param = $roomNum;
 else
   $param = "0";
-$kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id="."3db0ef82cfa5221c3278986f53496948"."&redirect_uri=".urlencode(base_url()."index.php/Login/kakao_login")."&response_type=code&state=".$param;
+$kakao_apiURL = "https://kauth.kakao.com/oauth/authorize?client_id="."c47884e2681e2a2a01b8e140dbc21ffb"."&redirect_uri=".urlencode(base_url()."index.php/Login/kakao_login")."&response_type=code&state=".$param;
 
 ?>
 

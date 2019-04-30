@@ -195,10 +195,10 @@
   </div>
 
 
-	<button id="authorize_button" style="display: none;">Authorize</button>
+	<!-- <button id="authorize_button" style="display: none;">Authorize</button>
     <button id="signout_button" style="display: none;">Sign Out</button>
 
-    <pre id="content" style="white-space: pre-wrap;"></pre>
+    <pre id="content" style="white-space: pre-wrap;"></pre> -->
 
 <script type="text/javascript">
       // Client ID and API key from the Developer Console
@@ -317,7 +317,32 @@
 
 
 <script>
-
+  Kakao.init('60b4798e25980dfd4fc4a9ce562f2f27');
+    function kakao_share(id){
+        // alert(site_url + '/Room/index/' + id);
+        Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '공유하기',
+          description: '',
+          imageUrl: 'http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+          link: {
+           mobileWebUrl: site_url + '/Room/index/' + id,
+            webUrl: site_url + '/Room/index/' + id
+          }
+        },
+        buttons: [
+        {
+          title: '참가하기',
+          link: {
+            mobileWebUrl: site_url + '/Room/index/' + id,
+            webUrl: site_url + '/Room/index/' + id
+          }
+        },
+        
+      ]
+      });
+    }
 	function openNav() {
 		$("#mySidenav").width( '200px' );
 		$(".sidenav_overlay").fadeIn();
@@ -331,6 +356,13 @@
 
 
     $(document).ready(function () {
+
+
+
+      $(".material-icons.pi").click(function(){
+            event.stopPropagation();
+            kakao_share('<?=$현재방->uid?>');
+      });
 
     	
     	$("#go").click(function(){ // 대화 보내기
