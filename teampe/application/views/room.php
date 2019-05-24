@@ -1,5 +1,67 @@
 <?php
 
+var_dump($token);
+var_dump($refreshToken);
+
+
+$GAPIS = 'https://www.googleapis.com/';
+
+function uploadFile($access_token, $file, $mime_type, $name) {
+    global $GAPIS;
+
+    $ch1 = curl_init();
+
+    // don't do ssl checks
+    curl_setopt($ch1, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch1, CURLOPT_SSL_VERIFYHOST, false);
+
+    $my_beautiful_body = '
+--joes_awesome_divider
+Content-Type: application/json; charset=UTF-8
+
+{
+    "name": "'.$name.'"
+}
+
+--joes_awesome_divider
+Content-Type: '.$mime_type.'
+
+'.file_get_contents($file).'
+
+--joes_awesome_divider--
+    ';
+
+    // do other curl stuff
+    curl_setopt($ch1, CURLOPT_URL, 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart');
+    curl_setopt($ch1, CURLOPT_POST, 1);
+    curl_setopt($ch1, CURLOPT_POSTFIELDS, $my_beautiful_body);
+    curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+
+    // set authorization header
+    curl_setopt($ch1, CURLOPT_HTTPHEADER, array('Content-Type: multipart/related; boundary=joes_awesome_divider', 'Authorization: Bearer ' . $access_token) );
+
+    // $response=curl_exec($ch1);
+    // if($response === false){
+    //     $output = 'ERROR: '.curl_error($ch1);
+    // } else{
+    //     $output = $response;
+    // }
+    // var_dump($output);
+
+    // // close first request handler
+    // curl_close($ch1);
+
+    // return $output;
+}
+
+
+$mime_type = 'image/png';  // could be 'image/jpeg', etc.
+$new_name = 'My Video';
+$the_file_and_path = base_url()."../upload/temp/123.png";
+$result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
+
+
+
 ?>
 
 <head>
@@ -167,7 +229,7 @@
 </style>
 </head>
 
-
+  
   <div class="profile">
 	<div class="sidenav_overlay" onclick="closeNav()"></div>
 	<div id="mySidenav" class="sidenav">
@@ -178,6 +240,7 @@
 	</div>
 	
 
+
   <span class="menu" onclick="openNav()">&#9776;</span>
   <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
     <span class="nickname"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
@@ -185,6 +248,19 @@
     <i class="material-icons ni">notifications_none</i>
     <i class="material-icons bi">keyboard_backspace</i>
   </div>
+
+  <a href="kakaolink://send?appkey=60b4798e25980dfd4fc4a9ce562f2f27&appver=1.0&linkver=4.0&template_json=%7B%22P%22%3A%7B%22TP%22%3A%22Feed%22%2C%22ME%22%3A%22%24%7BME%7D%22%2C%22SID%22%3A%22capri_292062%22%2C%22DID%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22SNM%22%3A%22teampe%22%2C%22SIC%22%3A%22https%3A%2F%2Fk.kakaocdn.net%2F14%2Fdn%2FbtqbjCnoZ8A%2FMyiKigHpJbSKusX0u3TPL1%2Fo.jpg%22%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LCP%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%2C%22LCM%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%7D%2C%22SL%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LCP%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%2C%22LCM%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%7D%2C%22VA%22%3A%226.0.0%22%2C%22VI%22%3A%225.9.8%22%2C%22VW%22%3A%222.5.1%22%2C%22VM%22%3A%222.2.0%22%2C%22FW%22%3Atrue%2C%22RF%22%3A%22out-client%22%7D%2C%22C%22%3A%7B%22THC%22%3A1%2C%22THL%22%3A%5B%7B%22TH%22%3A%7B%22THU%22%3A%22http%3A%2F%2Fmud-kage.kakao.co.kr%2Fdn%2FQ2iNx%2FbtqgeRgV54P%2FVLdBs9cvyn8BJXB3o7N8UK%2Fkakaolink40_original.png%22%2C%22W%22%3A400%2C%22H%22%3A400%7D%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D%7D%5D%2C%22TI%22%3A%7B%22TD%22%3A%7B%22T%22%3A%22%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0%22%7D%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D%7D%2C%22BUL%22%3A%5B%7B%22BU%22%3A%7B%22T%22%3A%22%EC%B0%B8%EA%B0%80%ED%95%98%EA%B8%B0%22%7D%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D%7D%5D%7D%7D&template_args=%7B%22%24%7BIMAGE_WIDTH%7D%22%3A%22400%22%2C%22%24%7BIOS_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BIMAGE_URL%7D%22%3A%22http%3A%2F%2Fmud-kage.kakao.co.kr%2Fdn%2FQ2iNx%2FbtqgeRgV54P%2FVLdBs9cvyn8BJXB3o7N8UK%2Fkakaolink40_original.png%22%2C%22%24%7BIMAGE_COUNT%7D%22%3A%221%22%2C%22%24%7BFIRST_BUTTON_TITLE%7D%22%3A%22%EC%B0%B8%EA%B0%80%ED%95%98%EA%B8%B0%22%2C%22%24%7BDESCRIPTION%7D%22%3A%22%22%2C%22%24%7BSHARED_COUNT%7D%22%3A%22%22%2C%22%24%7BANDROID_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BFIRST_BUTTON_IOS_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BFIRST_BUTTON_MOBILE_WEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22%24%7BCOMMENT_COUNT%7D%22%3A%22%22%2C%22%24%7BSUBSCRIBER_COUNT%7D%22%3A%22%22%2C%22%24%7BIMAGE_HEIGHT%7D%22%3A%22400%22%2C%22%24%7BTITLE%7D%22%3A%22%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0%22%2C%22%24%7BMOBILE_WEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22%24%7BFIRST_BUTTON_ANDROID_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BVIEW_COUNT%7D%22%3A%22%22%2C%22%24%7BWEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22%24%7BLIKE_COUNT%7D%22%3A%22%22%2C%22%24%7BFIRST_BUTTON_WEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D&template_id=3139&extras=%7B%22KA%22%3A%22sdk%2F1.29.1%20os%2Fjavascript%20lang%2Fko-KR%20device%2FLinux_i686%20origin%2Fhttps%253A%252F%252Fteampe.co.kr%22%7D">려차</a>
+
+  <button id="authorize_button" style="display: none;">Authorize</button>
+    <button id="signout_button" style="display: none;">Sign Out</button>
+    <button id="click">click</button>
+
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+
+
+    <?php
+        require_once VIEWPATH.'drive.php';
+    ?>
 
 
 
@@ -195,22 +271,27 @@
   </div>
 
 
-	<!-- <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
+	
 
-    <pre id="content" style="white-space: pre-wrap;"></pre> -->
+
 
 <script type="text/javascript">
+
+      if (typeof window.HybridApp != 'undefined') {
+        // window.HybridApp.meetingLog();
+    }
+
+
       // Client ID and API key from the Developer Console
-      var CLIENT_ID = '1042659178211-v3g7h3tf163i1fai0d742fmo6e3h2g0r.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyBmgeljxGX_CmUcSSP9dppXDbndG7rKlf0';
+      var CLIENT_ID = '1042659178211-ss6s7ab0hifp7pfhtin9eslp74u92qbh.apps.googleusercontent.com';
+      var API_KEY = 'AIzaSyByvf5SaohOQC2Ajx0ih7NC1wum4O8oSFk';
 
       // Array of API discovery doc URLs for APIs used by the quickstart
       var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+      var SCOPES = 'https://www.googleapis.com/auth/drive';
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
@@ -250,7 +331,9 @@
        *  appropriately. After a sign-in, the API is called.
        */
       function updateSigninStatus(isSignedIn) {
+
         if (isSignedIn) {
+          
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'block';
           listFiles();
@@ -315,7 +398,31 @@
     </script>
 
 
+<script type="text/javascript">
+  
+// a quick and dirty function to list some Drive files using the newly acquired access token
+function files_list (access_token) {
+    const drive_url = "https://www.googleapis.com/drive/v3/files";
+    let drive_request = {
+        method: "GET",
+        headers: new Headers({
+            Authorization: "Bearer "+access_token
+        })
+    }
+    fetch(drive_url, drive_request).then( response => {
+        return(response.json());
+    }).then( list =>  {
+      console.log(list.files);
+      //https://drive.google.com/open?id=
+        console.log("Found a file called "+list.files[0].name);
+    });
+}
 
+
+
+
+
+</script>
 <script>
   Kakao.init('60b4798e25980dfd4fc4a9ce562f2f27');
     function kakao_share(id){
@@ -357,6 +464,16 @@
 
     $(document).ready(function () {
 
+      var url_string = window.location.href; //
+      var url = new URL(url_string);
+      var access_token = url.searchParams.get("Authcode");
+      if(access_token)
+        files_list(access_token);
+
+
+    $("#click").click(function(){
+        gapi.load('picker', {'callback': onPickerApiLoad});
+    });
 
 
       $(".material-icons.pi").click(function(){
@@ -392,12 +509,29 @@
 			    // console.log(childKey,childData);
 
 				for(var k in childData) {
-					$(".list").append(unescape(k) + " : "+unescape(childData[k]) + "<br>");
+					share_data = unescape(childData[k]);
+          if(share_data.includes("share://")){
+            origin_data = share_data.split("share://");
+            origin_data = origin_data[1].split(",");
+            console.log(origin_data);
+            var img_tag_src = origin_data[3];
+            if (typeof window.HybridApp != 'undefined') {
+                img_tag_src.replace(/%/gi, "%25");
+            }
+            str = "<br>"+ "<a class='kakao_place' href = "+origin_data[0]+">"+origin_data[0]+"</a>" + "<br>" + origin_data[1] +"<br>" + origin_data[2] + '<img style = "width:250px" src="'+img_tag_src+'">';
+            $(".list").append(unescape(k) + " : "+str + "<br>");
+          }
+          else
+           $(".list").append(unescape(k) + " : "+share_data + "<br>");
 				}
 			});
 		});
 
 
+
+    $(".kakao_place").click(function(){
+      alert($(this).attr("href"));
+    });
        	
 
  	});

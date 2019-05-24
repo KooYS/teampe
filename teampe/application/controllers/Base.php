@@ -143,4 +143,29 @@ class Base extends CI_Controller
         }
     }
 
+
+    public function get_url_metadata(){
+        $url = $this->input->post("url");
+        libxml_use_internal_errors(true);
+        $c = file_get_contents($url);
+        $d = new DomDocument();
+        $d->loadHTML($c);
+        $xp = new domxpath($d);
+        $title = "";
+        $description = "";
+        $image = "";
+        foreach ($xp->query("//meta[@property='og:title']") as $el) {
+           $title = $title.$el->getAttribute("content");
+        }
+        foreach ($xp->query("//meta[@property='og:description']") as $el) {
+            $description = $description.$el->getAttribute("content");
+        }
+        foreach ($xp->query("//meta[@property='og:image']") as $el) {
+            $image = $image.$el->getAttribute("content");
+        }
+        // print_r($title);
+        die (json_encode(array('title' => $title , 'description' => $description, 'image' => $image)));
+    }
+
+
 }
