@@ -14,6 +14,8 @@ class Room extends Base
 
     public function index($id)
     {
+        $data['token'] = $this->input->get("Authcode");
+        $data['refreshToken'] = $this->input->get("Refreshtoken");
         $data["현재방"] = $this->roomModel->getRow($id);
         if(!$this->session->has_userdata(SESSION_USR_ID))
         {
