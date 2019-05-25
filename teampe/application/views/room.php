@@ -82,8 +82,10 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
 
 .profile{
     background-image: linear-gradient(to right,#147dd9,#3f4a9c); 
-    position: relative;
+    position: fixed;
+    width: 100%;
     height: 90px;
+    z-index: 1000;
   }
 .pro_img{
     border-radius: 50%;
@@ -91,6 +93,14 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
     width: 60px;
     border: solid;
     border-color: #ffffff;
+    margin:15px;
+    }
+.pro_img1{
+    border-radius: 50%;
+    margin-left: 10px;
+    width: 45px;
+    border: solid;
+    border-color: #315bb0;
     margin:15px;
     }
 .profile .nickname{
@@ -102,64 +112,6 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
     font-family: Noto Sans KR;
     }
 
-.sidenav {
-	height: 100%;
-	width: 0;
-	position: fixed;
-	top: 0;
-	left: 0;
-  background-color: #f3f5fa;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-  z-index: 10001;
-}
-
-.sidenav_overlay{
-	width: 100%;
-	height: 100%;
-	background-color:rgba(0, 0, 0, 0.3);
-	position: absolute;
-	left: 0;
-	top: 0;
-	display: none;
-	z-index: 10000;
-	transition: background .25s ease-in-out;
-	-moz-transition: background .25s ease-in-out;
-	-webkit-transition: background .25s ease-in-out;
-}
-.sidenav a {
-	padding: 8px 8px 8px 32px;
-	text-decoration: none;
-	font-size: 20px;
-  color: #315bb0;
-  display: block;
-  transition: 0.3s;
-  background-color: #f3f5fa;
-}
-
-.sidenav a:hover {
-  color: #ffffff;
-  background-color: #315bb0;
-}
-
-.sidenav .closebtn {
-	position: absolute;
-	top: 0;
-	right: 25px;
-	font-size: 36px;
-	margin-left: 50px;
-}
-
-.menu{
-        font-size:25px;
-        cursor:pointer;
-        color:#ffffff;
-        margin-left: 15px;
-        vertical-align: center;
-        top: 50%;
-
-    }
 
 .material-icons.add{
     font-size: 36px;
@@ -190,10 +142,10 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
     position: absolute;
 }
 .footer{
-  position:absolute;
+  position:fixed;
   bottom: 0;
-  width:100%;
-
+  width:105%;
+  margin-left: ;
 
 }
 
@@ -202,8 +154,9 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
   color: #555555;
   border-radius: 12px;
   background-color: #e5e5e5;
-    border: solid;
-    border-color: #ffffff;
+  border: solid;
+  border-color: #ffffff;
+  width:80%;
 
 }
 
@@ -218,19 +171,144 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
 
 }
 
+
+.conv{
+  font-size: 15px;
+  color: #315bb0;
+  margin-left: 10%;
+}
+
+.room_name {
+  font-size: 20px;
+  color: #315bb0;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+.room_name1 {
+  font-size: 15px;
+  color: #ffffff;
+  display: inline-table;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
 .list{
 
+  height: 600px;
+  padding-top: 90px;
+  overflow: scroll;
+  z-index: 1001;
+  
+  /*background-color: #f2f2f2; */
+  
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+.chat1{
+  font-size: 15px;
+  text-align: right;
+  margin-right: 5px;
+  margin-top: 10px;
+  padding: 10px 13px;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #315bb0;
+  border: 1px solid #5858fa;
+  word-break: break-all;
+  display: inline-block;
+  clear: both;
+  float: right;
+  max-width: 180px;
+  position: relative;
 }
+
+.chat1:after {
+    content: '';
+    position: absolute;
+    border-bottom: 8px solid #315bb0;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    top: -8px;
+    right: 6px;
+}
+
+
+
+.chat2{
+  font-size: 15px;
+  text-align: left;
+  margin-left: 5px;
+  margin-top: 10px;
+  padding: 10px 13px;
+  border-radius: 5px;
+  color: #315bb0;
+  background-color: #f3f5fa;
+  border: 1px solid #ffffff;
+  word-break: break-all;
+  display: inline-block;
+  clear: both;
+  float: left;
+  max-width: 180px;
+  position: relative;
+
+}
+
+.chat2:after {
+    content: '';
+    position: absolute;
+    border-bottom: 8px solid #f3f5fa;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    top: -8px;
+    left: 6px;
+}
+
+.chat_img{
+  
+  border-radius: 50%;
+  margin-left: 10px;
+  width: 35px;
+  border: solid;
+  border-color: #ffffff;
+  float: right;
+  vertical-align: middle;
+  
+}
+
+.part_name{
+  color: #315bb0;
+  font-size: 15px;
+}
+
+
 </style>
 </head>
 
   
   <div class="profile">
+<<<<<<< HEAD
+  <div class="sidenav_overlay" onclick="closeNav()"></div>
+  <div id="mySidenav" class="sidenav">
+    <span class="room_name"><?=$현재방->name?></span>
+    <hr>
+    <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/6">자료공유</a>
+    <hr>
+    <p class="conv">대화참여자</p>
+    <img class="pro_img1" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
+    <span class="part_name"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
+  </div>
+  
+
+    <i class="material-icons menu" onclick="openNav()">menu</i>
+    <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
+    <span class="room_name1"><?=$현재방->name?></span>
+=======
 	<div class="sidenav_overlay" onclick="closeNav()"></div>
 	<div id="mySidenav" class="sidenav">
 	  <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
@@ -244,9 +322,10 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
   <span class="menu" onclick="openNav()">&#9776;</span>
   <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
     <span class="nickname"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
+>>>>>>> 866068c277e04f9259e8d30bbf5e3d340d058391
     <i class="material-icons pi">person_add</i>
     <i class="material-icons ni">notifications_none</i>
-    <i class="material-icons bi">keyboard_backspace</i>
+    <a href="javascript:history.back()"><i class="material-icons bi">keyboard_backspace</i></a>
   </div>
 
   <a href="kakaolink://send?appkey=60b4798e25980dfd4fc4a9ce562f2f27&appver=1.0&linkver=4.0&template_json=%7B%22P%22%3A%7B%22TP%22%3A%22Feed%22%2C%22ME%22%3A%22%24%7BME%7D%22%2C%22SID%22%3A%22capri_292062%22%2C%22DID%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22SNM%22%3A%22teampe%22%2C%22SIC%22%3A%22https%3A%2F%2Fk.kakaocdn.net%2F14%2Fdn%2FbtqbjCnoZ8A%2FMyiKigHpJbSKusX0u3TPL1%2Fo.jpg%22%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LCP%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%2C%22LCM%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%7D%2C%22SL%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LCP%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%2C%22LCM%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%7D%2C%22VA%22%3A%226.0.0%22%2C%22VI%22%3A%225.9.8%22%2C%22VW%22%3A%222.5.1%22%2C%22VM%22%3A%222.2.0%22%2C%22FW%22%3Atrue%2C%22RF%22%3A%22out-client%22%7D%2C%22C%22%3A%7B%22THC%22%3A1%2C%22THL%22%3A%5B%7B%22TH%22%3A%7B%22THU%22%3A%22http%3A%2F%2Fmud-kage.kakao.co.kr%2Fdn%2FQ2iNx%2FbtqgeRgV54P%2FVLdBs9cvyn8BJXB3o7N8UK%2Fkakaolink40_original.png%22%2C%22W%22%3A400%2C%22H%22%3A400%7D%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D%7D%5D%2C%22TI%22%3A%7B%22TD%22%3A%7B%22T%22%3A%22%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0%22%7D%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D%7D%2C%22BUL%22%3A%5B%7B%22BU%22%3A%7B%22T%22%3A%22%EC%B0%B8%EA%B0%80%ED%95%98%EA%B8%B0%22%7D%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D%7D%5D%7D%7D&template_args=%7B%22%24%7BIMAGE_WIDTH%7D%22%3A%22400%22%2C%22%24%7BIOS_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BIMAGE_URL%7D%22%3A%22http%3A%2F%2Fmud-kage.kakao.co.kr%2Fdn%2FQ2iNx%2FbtqgeRgV54P%2FVLdBs9cvyn8BJXB3o7N8UK%2Fkakaolink40_original.png%22%2C%22%24%7BIMAGE_COUNT%7D%22%3A%221%22%2C%22%24%7BFIRST_BUTTON_TITLE%7D%22%3A%22%EC%B0%B8%EA%B0%80%ED%95%98%EA%B8%B0%22%2C%22%24%7BDESCRIPTION%7D%22%3A%22%22%2C%22%24%7BSHARED_COUNT%7D%22%3A%22%22%2C%22%24%7BANDROID_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BFIRST_BUTTON_IOS_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BFIRST_BUTTON_MOBILE_WEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22%24%7BCOMMENT_COUNT%7D%22%3A%22%22%2C%22%24%7BSUBSCRIBER_COUNT%7D%22%3A%22%22%2C%22%24%7BIMAGE_HEIGHT%7D%22%3A%22400%22%2C%22%24%7BTITLE%7D%22%3A%22%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0%22%2C%22%24%7BMOBILE_WEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22%24%7BFIRST_BUTTON_ANDROID_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BVIEW_COUNT%7D%22%3A%22%22%2C%22%24%7BWEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22%24%7BLIKE_COUNT%7D%22%3A%22%22%2C%22%24%7BFIRST_BUTTON_WEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D&template_id=3139&extras=%7B%22KA%22%3A%22sdk%2F1.29.1%20os%2Fjavascript%20lang%2Fko-KR%20device%2FLinux_i686%20origin%2Fhttps%253A%252F%252Fteampe.co.kr%22%7D">려차</a>
@@ -264,13 +343,16 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
 
 
 
-	<div class="list"></div>
+  <div class="chat_area"><div class="list"></div></div>
   <div class="footer">
-    <input class="chat_text" type="text" placeholder="message..." name="" id="chat"><button class="ok_btn" id="go">보내기</button>
+    <input class="chat_text" type="text" placeholder=" message..." name="" id="chat"><button class="ok_btn" id="go">보내기</button>
 
   </div>
 
 
+<<<<<<< HEAD
+  
+=======
 	
 
 
@@ -391,6 +473,7 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
       }
 
     </script>
+>>>>>>> 866068c277e04f9259e8d30bbf5e3d340d058391
 
     <script async defer src="https://apis.google.com/js/api.js"
       onload="this.onload=function(){};handleClientLoad()"
@@ -420,6 +503,12 @@ function files_list (access_token) {
 
 
 
+<<<<<<< HEAD
+  function openNav() {
+    $("#mySidenav").width( '200px' );
+    $(".sidenav_overlay").fadeIn();
+  }
+=======
 
 
 </script>
@@ -459,11 +548,58 @@ function files_list (access_token) {
 		$("#mySidenav").width( '0' );
 		$(".sidenav_overlay").fadeOut();
 	}
+>>>>>>> 866068c277e04f9259e8d30bbf5e3d340d058391
 
+  function closeNav() {
+    $("#mySidenav").width( '0' );
+    $(".sidenav_overlay").fadeOut();
+  }
 
 
     $(document).ready(function () {
 
+<<<<<<< HEAD
+      
+      $("#go").click(function(){ // 대화 보내기
+        var today = new Date();
+        var y = today.getFullYear();
+        var Month = ("0" + (today.getMonth() + 1)).slice(-2) ;
+        var d = ("0" + today.getDate()).slice(-2) ;
+        var h = ("0" + today.getHours()).slice(-2) ;
+        var m = ("0" + today.getMinutes()).slice(-2) ;
+        var s = ("0" + today.getSeconds()).slice(-2) ;
+        var timestamp = y + "-" + Month  + "-" + d + "-" + h + ":" + m + ":" + s;
+
+        var ref_data = '<?=$현재방->uid?>/'+timestamp+'/'+escape("<?=$this->session->userdata(SESSION_USR_NAME)?>");
+
+        database.ref(ref_data).set(escape($("#chat").val()));
+        $("#chat").val("");
+
+      });
+
+
+      var starCountRef = firebase.database().ref('<?=$현재방->uid?>/').orderByKey();
+    starCountRef.on('value', function(snapshot) {
+      $(".list").empty();
+      snapshot.forEach(function(childSnapshot) {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          // console.log(childKey,childData);
+
+        for(var k in childData) {
+          if(unescape(k) =="<?=$this->session->userdata(SESSION_USR_NAME)?>")
+            temp = "<div class='chat1'>"+unescape(childData[k])+ "</div>";
+          else
+            temp = "<div class='chat2'>"+unescape(k) + " : "+unescape(childData[k])+"</div>";
+          console.log(temp);
+          $(".list").append(temp);
+        }
+      });
+    });
+
+
+        
+=======
       var url_string = window.location.href; //
       var url = new URL(url_string);
       var access_token = url.searchParams.get("Authcode");
@@ -533,8 +669,9 @@ function files_list (access_token) {
       alert($(this).attr("href"));
     });
        	
+>>>>>>> 866068c277e04f9259e8d30bbf5e3d340d058391
 
- 	});
+  });
 
 
 </script>
