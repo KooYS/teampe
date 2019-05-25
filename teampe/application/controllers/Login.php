@@ -4,10 +4,13 @@ require_once __DIR__ . "/Base.php";
 
 class Login extends Base
 {
+
+    private $usrModel;
     function __construct()
     {
         parent::__construct();
         $this->load->model('Usrmodel');
+        $this->usrModel = new Usrmodel();
     }
 
     public function index()
@@ -96,9 +99,10 @@ class Login extends Base
             'id' => $id,
             'name' => $name,
         );
-        $usrModel = (new Usrmodel());
-        if($usrModel->get_where(array('id' => $id))->row() == null)
-            $usrModel->save($usrdata);
+        var_dump($this->usrModel->get_where(array('id' => $id)));
+        var_dump("test");
+        if($this->usrModel->get_where(array('id' => $id))->row() == null)
+            $this->usrModel->save($usrdata);
 
         $type = $this->input->get('state');
 
