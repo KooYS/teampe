@@ -20,8 +20,10 @@
 
 .profile{
     background-image: linear-gradient(to right,#147dd9,#3f4a9c); 
-    position: relative;
+    position: fixed;
+    width: 100%;
     height: 90px;
+    z-index: 1000;
   }
 .pro_img{
     border-radius: 50%;
@@ -29,6 +31,14 @@
     width: 60px;
     border: solid;
     border-color: #ffffff;
+    margin:15px;
+    }
+.pro_img1{
+    border-radius: 50%;
+    margin-left: 10px;
+    width: 45px;
+    border: solid;
+    border-color: #315bb0;
     margin:15px;
     }
 .profile .nickname{
@@ -40,64 +50,6 @@
     font-family: Noto Sans KR;
     }
 
-.sidenav {
-	height: 100%;
-	width: 0;
-	position: fixed;
-	top: 0;
-	left: 0;
-  background-color: #f3f5fa;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-  z-index: 10001;
-}
-
-.sidenav_overlay{
-	width: 100%;
-	height: 100%;
-	background-color:rgba(0, 0, 0, 0.3);
-	position: absolute;
-	left: 0;
-	top: 0;
-	display: none;
-	z-index: 10000;
-	transition: background .25s ease-in-out;
-	-moz-transition: background .25s ease-in-out;
-	-webkit-transition: background .25s ease-in-out;
-}
-.sidenav a {
-	padding: 8px 8px 8px 32px;
-	text-decoration: none;
-	font-size: 20px;
-  color: #315bb0;
-  display: block;
-  transition: 0.3s;
-  background-color: #f3f5fa;
-}
-
-.sidenav a:hover {
-  color: #ffffff;
-  background-color: #315bb0;
-}
-
-.sidenav .closebtn {
-	position: absolute;
-	top: 0;
-	right: 25px;
-	font-size: 36px;
-	margin-left: 50px;
-}
-
-.menu{
-        font-size:25px;
-        cursor:pointer;
-        color:#ffffff;
-        margin-left: 15px;
-        vertical-align: center;
-        top: 50%;
-
-    }
 
 .material-icons.add{
     font-size: 36px;
@@ -128,10 +80,10 @@
     position: absolute;
 }
 .footer{
-  position:absolute;
+  position:fixed;
   bottom: 0;
-  width:100%;
-
+  width:105%;
+  margin-left: ;
 
 }
 
@@ -140,8 +92,9 @@
   color: #555555;
   border-radius: 12px;
   background-color: #e5e5e5;
-    border: solid;
-    border-color: #ffffff;
+  border: solid;
+  border-color: #ffffff;
+  width:80%;
 
 }
 
@@ -156,158 +109,157 @@
 
 }
 
+
+.conv{
+  font-size: 15px;
+  color: #315bb0;
+  margin-left: 10%;
+}
+
+.room_name {
+  font-size: 20px;
+  color: #315bb0;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+.room_name1 {
+  font-size: 15px;
+  color: #ffffff;
+  display: inline-table;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
 .list{
 
+  height: 600px;
+  padding-top: 90px;
+  overflow: scroll;
+  z-index: 1001;
+  
+  /*background-color: #f2f2f2; */
+  
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+.chat1{
+  font-size: 15px;
+  text-align: right;
+  margin-right: 5px;
+  margin-top: 10px;
+  padding: 10px 13px;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #315bb0;
+  border: 1px solid #5858fa;
+  word-break: break-all;
+  display: inline-block;
+  clear: both;
+  float: right;
+  max-width: 180px;
+  position: relative;
 }
+
+.chat1:after {
+    content: '';
+    position: absolute;
+    border-bottom: 8px solid #315bb0;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    top: -8px;
+    right: 6px;
+}
+
+
+
+.chat2{
+  font-size: 15px;
+  text-align: left;
+  margin-left: 5px;
+  margin-top: 10px;
+  padding: 10px 13px;
+  border-radius: 5px;
+  color: #315bb0;
+  background-color: #f3f5fa;
+  border: 1px solid #ffffff;
+  word-break: break-all;
+  display: inline-block;
+  clear: both;
+  float: left;
+  max-width: 180px;
+  position: relative;
+
+}
+
+.chat2:after {
+    content: '';
+    position: absolute;
+    border-bottom: 8px solid #f3f5fa;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    top: -8px;
+    left: 6px;
+}
+
+.chat_img{
+  
+  border-radius: 50%;
+  margin-left: 10px;
+  width: 35px;
+  border: solid;
+  border-color: #ffffff;
+  float: right;
+  vertical-align: middle;
+  
+}
+
+.part_name{
+  color: #315bb0;
+  font-size: 15px;
+}
+
+
 </style>
 </head>
 
 
   <div class="profile">
-	<div class="sidenav_overlay" onclick="closeNav()"></div>
-	<div id="mySidenav" class="sidenav">
-	  <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
-	  <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
-	  <a href="<?=base_url()?>index.php/MyFunction/index/3">자료공유</a>
-	  <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
-	</div>
-	
+  <div class="sidenav_overlay" onclick="closeNav()"></div>
+  <div id="mySidenav" class="sidenav">
+    <span class="room_name"><?=$현재방->name?></span>
+    <hr>
+    <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/6">자료공유</a>
+    <hr>
+    <p class="conv">대화참여자</p>
+    <img class="pro_img1" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
+    <span class="part_name"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
+  </div>
+  
 
-  <span class="menu" onclick="openNav()">&#9776;</span>
-  <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
-    <span class="nickname"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
+    <i class="material-icons menu" onclick="openNav()">menu</i>
+    <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
+    <span class="room_name1"><?=$현재방->name?></span>
     <i class="material-icons pi">person_add</i>
     <i class="material-icons ni">notifications_none</i>
-    <i class="material-icons bi">keyboard_backspace</i>
+    <a href="javascript:history.back()"><i class="material-icons bi">keyboard_backspace</i></a>
   </div>
 
 
 
-	<div class="list"></div>
+  <div class="chat_area"><div class="list"></div></div>
   <div class="footer">
-    <input class="chat_text" type="text" placeholder="message..." name="" id="chat"><button class="ok_btn" id="go">보내기</button>
+    <input class="chat_text" type="text" placeholder=" message..." name="" id="chat"><button class="ok_btn" id="go">보내기</button>
 
   </div>
 
 
-	<button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
-
-    <pre id="content" style="white-space: pre-wrap;"></pre>
-
-<script type="text/javascript">
-      // Client ID and API key from the Developer Console
-      var CLIENT_ID = '1042659178211-v3g7h3tf163i1fai0d742fmo6e3h2g0r.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyBmgeljxGX_CmUcSSP9dppXDbndG7rKlf0';
-
-      // Array of API discovery doc URLs for APIs used by the quickstart
-      var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-
-      // Authorization scopes required by the API; multiple scopes can be
-      // included, separated by spaces.
-      var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
-
-      var authorizeButton = document.getElementById('authorize_button');
-      var signoutButton = document.getElementById('signout_button');
-
-      /**
-       *  On load, called to load the auth2 library and API client library.
-       */
-      function handleClientLoad() {
-        gapi.load('client:auth2', initClient);
-      }
-
-      /**
-       *  Initializes the API client library and sets up sign-in state
-       *  listeners.
-       */
-      function initClient() {
-        gapi.client.init({
-          apiKey: API_KEY,
-          clientId: CLIENT_ID,
-          discoveryDocs: DISCOVERY_DOCS,
-          scope: SCOPES
-        }).then(function () {
-          // Listen for sign-in state changes.
-          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-          // Handle the initial sign-in state.
-          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-          authorizeButton.onclick = handleAuthClick;
-          signoutButton.onclick = handleSignoutClick;
-        }, function(error) {
-          appendPre(JSON.stringify(error, null, 2));
-        });
-      }
-
-      /**
-       *  Called when the signed in status changes, to update the UI
-       *  appropriately. After a sign-in, the API is called.
-       */
-      function updateSigninStatus(isSignedIn) {
-        if (isSignedIn) {
-          authorizeButton.style.display = 'none';
-          signoutButton.style.display = 'block';
-          listFiles();
-        } else {
-          authorizeButton.style.display = 'block';
-          signoutButton.style.display = 'none';
-        }
-      }
-
-      /**
-       *  Sign in the user upon button click.
-       */
-      function handleAuthClick(event) {
-        gapi.auth2.getAuthInstance().signIn();
-      }
-
-      /**
-       *  Sign out the user upon button click.
-       */
-      function handleSignoutClick(event) {
-        gapi.auth2.getAuthInstance().signOut();
-      }
-
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node. Used to display the results of the API call.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
-      function appendPre(message) {
-        var pre = document.getElementById('content');
-        var textContent = document.createTextNode(message + '\n');
-        pre.appendChild(textContent);
-      }
-
-      /**
-       * Print files.
-       */
-      function listFiles() {
-        gapi.client.drive.files.list({
-          'pageSize': 10,
-          'fields': "nextPageToken, files(id, name)"
-        }).then(function(response) {
-          appendPre('Files:');
-          var files = response.result.files;
-          if (files && files.length > 0) {
-            for (var i = 0; i < files.length; i++) {
-              var file = files[i];
-              appendPre(file.name + ' (' + file.id + ')');
-            }
-          } else {
-            appendPre('No files found.');
-          }
-        });
-      }
-
-    </script>
+  
 
     <script async defer src="https://apis.google.com/js/api.js"
       onload="this.onload=function(){};handleClientLoad()"
@@ -318,57 +270,61 @@
 
 <script>
 
-	function openNav() {
-		$("#mySidenav").width( '200px' );
-		$(".sidenav_overlay").fadeIn();
-	}
+  function openNav() {
+    $("#mySidenav").width( '200px' );
+    $(".sidenav_overlay").fadeIn();
+  }
 
-	function closeNav() {
-		$("#mySidenav").width( '0' );
-		$(".sidenav_overlay").fadeOut();
-	}
-
+  function closeNav() {
+    $("#mySidenav").width( '0' );
+    $(".sidenav_overlay").fadeOut();
+  }
 
 
     $(document).ready(function () {
 
-    	
-    	$("#go").click(function(){ // 대화 보내기
-    		var today = new Date();
-    		var y = today.getFullYear();
-    		var Month = ("0" + (today.getMonth() + 1)).slice(-2) ;
-    		var d = ("0" + today.getDate()).slice(-2) ;
-  			var h = ("0" + today.getHours()).slice(-2) ;
-  			var m = ("0" + today.getMinutes()).slice(-2) ;
-  			var s = ("0" + today.getSeconds()).slice(-2) ;
-  			var timestamp = y + "-" + Month  + "-" + d + "-" + h + ":" + m + ":" + s;
+      
+      $("#go").click(function(){ // 대화 보내기
+        var today = new Date();
+        var y = today.getFullYear();
+        var Month = ("0" + (today.getMonth() + 1)).slice(-2) ;
+        var d = ("0" + today.getDate()).slice(-2) ;
+        var h = ("0" + today.getHours()).slice(-2) ;
+        var m = ("0" + today.getMinutes()).slice(-2) ;
+        var s = ("0" + today.getSeconds()).slice(-2) ;
+        var timestamp = y + "-" + Month  + "-" + d + "-" + h + ":" + m + ":" + s;
 
-    		var ref_data = '<?=$현재방->uid?>/'+timestamp+'/'+escape("<?=$this->session->userdata(SESSION_USR_NAME)?>");
+        var ref_data = '<?=$현재방->uid?>/'+timestamp+'/'+escape("<?=$this->session->userdata(SESSION_USR_NAME)?>");
 
-    		database.ref(ref_data).set(escape($("#chat").val()));
-    		$("#chat").val("");
+        database.ref(ref_data).set(escape($("#chat").val()));
+        $("#chat").val("");
 
-    	});
-
-
-    	var starCountRef = firebase.database().ref('<?=$현재방->uid?>/').orderByKey();
-		starCountRef.on('value', function(snapshot) {
-			$(".list").empty();
-			snapshot.forEach(function(childSnapshot) {
-			    var childKey = childSnapshot.key;
-			    var childData = childSnapshot.val();
-			    // console.log(childKey,childData);
-
-				for(var k in childData) {
-					$(".list").append(unescape(k) + " : "+unescape(childData[k]) + "<br>");
-				}
-			});
-		});
+      });
 
 
-       	
+      var starCountRef = firebase.database().ref('<?=$현재방->uid?>/').orderByKey();
+    starCountRef.on('value', function(snapshot) {
+      $(".list").empty();
+      snapshot.forEach(function(childSnapshot) {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          // console.log(childKey,childData);
 
- 	});
+        for(var k in childData) {
+          if(unescape(k) =="<?=$this->session->userdata(SESSION_USR_NAME)?>")
+            temp = "<div class='chat1'>"+unescape(childData[k])+ "</div>";
+          else
+            temp = "<div class='chat2'>"+unescape(k) + " : "+unescape(childData[k])+"</div>";
+          console.log(temp);
+          $(".list").append(temp);
+        }
+      });
+    });
+
+
+        
+
+  });
 
 
 </script>

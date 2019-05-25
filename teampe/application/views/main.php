@@ -5,19 +5,13 @@
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
 <style>
-    @font-face {
-       font-family: 'Noto Sans KR';
-       font-style: normal;
-       font-weight: 500;
-       src: url(/fonts/NotoSansKr/NotoSansKR-Medium.woff2) format('woff2'),
-            url(/fonts/NotoSansKr/NotoSansKR-Medium.woff) format('woff'),
-            url(/fonts/NotoSansKr/NotoSansKR-Medium.otf) format('opentype');
 
-        }
     .profile{
         background-image: linear-gradient(to right,#147dd9,#3f4a9c); 
-        position: relative;
+        position: fixed;
+        width: 100%;
         height: 90px;
+        z-index: 1002;
     }
     .pro_img {
         border-radius: 50%;
@@ -33,13 +27,15 @@
         margin-left: -15px;
         transform: translate(50%,-50%);
         position: absolute;
-        font-family: Noto Sans KR;
+        font-family: NotoSansKR;
     }
 
-
     .make_btn_wrap {
+        position: fixed;
+        left: 40%;
+        bottom: 0%;
+        transform: translate(50%,-50%);
         text-align: center;
-        color: #0a85d7;
     }
 
     .make_btn {
@@ -75,17 +71,28 @@
     }
 
     .room_list_wrap{
-        padding: 20px;
+        padding-top: 110px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        overflow: scroll;
+        z-index: 1001;
+        height: 550px;
+        background-color: #ffffff;
+
+        
     }
 
     .room_wrap{
         position: relative;
         width: 100%;
         height: 100px;
-        margin-bottom: 13px;
+        margin-bottom: 20px;
         box-shadow: 1px 1px 1px gray;
         border-radius: 5px;
         border: 1px solid #D0D0D0;
+        background-color: #f3f5fa;
+
     }
 
     .room_wrap .room_name{
@@ -106,63 +113,21 @@
         border: solid;
 
     }
-    .sidenav {
-        height: 100%;
-        width: 0;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: #f3f5fa;
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-        z-index: 10001;
-    }
+    
 
-    .sidenav_overlay{
-        width: 100%;
-        height: 100%;
-        background-color:rgba(0, 0, 0, 0.3);
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: none;
-        z-index: 10000;
-        transition: background .25s ease-in-out;
-        -moz-transition: background .25s ease-in-out;
-        -webkit-transition: background .25s ease-in-out;
-    }
-    .sidenav a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
+    .menuP{
         font-size: 20px;
         color: #315bb0;
-        display: block;
-        transition: 0.3s;
-        background-color: #f3f5fa;
+        text-align: center;
     }
 
-    .sidenav a:hover {
-        color: #ffffff;
-        background-color: #315bb0;
+    hr{
+        width: 95%;
+        height: 2px;
+        background: #315bb0;
+ 
     }
 
-    .sidenav .closebtn {
-        position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
-    }
-    .menu{
-        font-size:25px;
-        cursor:pointer;
-        color:#ffffff;
-        margin-left: 15px;
-        vertical-align: center;
-        top: 50%;
-
-    }
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
@@ -175,12 +140,18 @@
 <div class="profile">
     <div class="sidenav_overlay" onclick="closeNav()"></div>
     <div id="mySidenav" class="sidenav">
-      <a href="#">시간표</a>
-      <a href="#">빈강의실</a>
-      <a href="#">자료공유</a>
-      <a href="#">ToDoList</a>
+        <p class="menuP">메뉴</p>
+        <hr>
+        <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
+        <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
+        <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
+        <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
+        <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
+        <a href="<?=base_url()?>index.php/MyFunction/index/6">자료공유</a>
+        <hr>
     </div>
-    <span class="menu" onclick="openNav()">&#9776;</span>
+
+    <i class="material-icons menu" onclick="openNav()">menu</i>
 
     <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
     <span class="nickname"><?=$this->session->userdata(SESSION_USR_NAME)?></span>

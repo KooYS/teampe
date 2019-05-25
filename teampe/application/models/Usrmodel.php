@@ -9,7 +9,7 @@ class Usrmodel extends Basemodel
     public function __construct()
     {
         parent::__construct();
-        $this->tbl_name = "";
+        $this->tbl_name = "usr";
     }
 
     public function getRowById($usrid)
