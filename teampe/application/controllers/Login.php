@@ -22,7 +22,7 @@ class Login extends Base
     public function kakao_login()
     {
         $returnCode = $_GET["code"]; // 서버로 부터 토큰을 발급받을 수 있는 코드를 받아옵니다
-        $restAPIKey = "3db0ef82cfa5221c3278986f53496948"; // 본인의 REST API KEY를 입력해주세요
+        $restAPIKey = "c47884e2681e2a2a01b8e140dbc21ffb"; // 본인의 REST API KEY를 입력해주세요
         $callbacURI = urlencode(base_url()."index.php/Login/kakao_login"); // 본인의 Call Back URL을 입력해주세요
         $getTokenUrl = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=".$restAPIKey."&redirect_uri=".$callbacURI."&code=".$returnCode;
          
