@@ -287,7 +287,6 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
 
   
   <div class="profile">
-<<<<<<< HEAD
   <div class="sidenav_overlay" onclick="closeNav()"></div>
   <div id="mySidenav" class="sidenav">
     <span class="room_name"><?=$현재방->name?></span>
@@ -308,21 +307,7 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
     <i class="material-icons menu" onclick="openNav()">menu</i>
     <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
     <span class="room_name1"><?=$현재방->name?></span>
-=======
-	<div class="sidenav_overlay" onclick="closeNav()"></div>
-	<div id="mySidenav" class="sidenav">
-	  <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
-	  <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
-	  <a href="<?=base_url()?>index.php/MyFunction/index/3">자료공유</a>
-	  <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
-	</div>
-	
 
-
-  <span class="menu" onclick="openNav()">&#9776;</span>
-  <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
-    <span class="nickname"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
->>>>>>> 866068c277e04f9259e8d30bbf5e3d340d058391
     <i class="material-icons pi">person_add</i>
     <i class="material-icons ni">notifications_none</i>
     <a href="javascript:history.back()"><i class="material-icons bi">keyboard_backspace</i></a>
@@ -349,10 +334,6 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
 
   </div>
 
-
-<<<<<<< HEAD
-  
-=======
 	
 
 
@@ -473,7 +454,6 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
       }
 
     </script>
->>>>>>> 866068c277e04f9259e8d30bbf5e3d340d058391
 
     <script async defer src="https://apis.google.com/js/api.js"
       onload="this.onload=function(){};handleClientLoad()"
@@ -502,13 +482,10 @@ function files_list (access_token) {
 }
 
 
-
-<<<<<<< HEAD
   function openNav() {
     $("#mySidenav").width( '200px' );
     $(".sidenav_overlay").fadeIn();
   }
-=======
 
 
 </script>
@@ -548,7 +525,6 @@ function files_list (access_token) {
 		$("#mySidenav").width( '0' );
 		$(".sidenav_overlay").fadeOut();
 	}
->>>>>>> 866068c277e04f9259e8d30bbf5e3d340d058391
 
   function closeNav() {
     $("#mySidenav").width( '0' );
@@ -558,8 +534,24 @@ function files_list (access_token) {
 
     $(document).ready(function () {
 
-<<<<<<< HEAD
-      
+ var url_string = window.location.href; //
+      var url = new URL(url_string);
+      var access_token = url.searchParams.get("Authcode");
+      if(access_token)
+        files_list(access_token);
+
+
+    $("#click").click(function(){
+        gapi.load('picker', {'callback': onPickerApiLoad});
+    });
+
+
+      $(".material-icons.pi").click(function(){
+            event.stopPropagation();
+            kakao_share('<?=$현재방->uid?>');
+      });
+	    
+	    
       $("#go").click(function(){ // 대화 보내기
         var today = new Date();
         var y = today.getFullYear();
@@ -587,65 +579,7 @@ function files_list (access_token) {
           // console.log(childKey,childData);
 
         for(var k in childData) {
-          if(unescape(k) =="<?=$this->session->userdata(SESSION_USR_NAME)?>")
-            temp = "<div class='chat1'>"+unescape(childData[k])+ "</div>";
-          else
-            temp = "<div class='chat2'>"+unescape(k) + " : "+unescape(childData[k])+"</div>";
-          console.log(temp);
-          $(".list").append(temp);
-        }
-      });
-    });
-
-
-        
-=======
-      var url_string = window.location.href; //
-      var url = new URL(url_string);
-      var access_token = url.searchParams.get("Authcode");
-      if(access_token)
-        files_list(access_token);
-
-
-    $("#click").click(function(){
-        gapi.load('picker', {'callback': onPickerApiLoad});
-    });
-
-
-      $(".material-icons.pi").click(function(){
-            event.stopPropagation();
-            kakao_share('<?=$현재방->uid?>');
-      });
-
-    	
-    	$("#go").click(function(){ // 대화 보내기
-    		var today = new Date();
-    		var y = today.getFullYear();
-    		var Month = ("0" + (today.getMonth() + 1)).slice(-2) ;
-    		var d = ("0" + today.getDate()).slice(-2) ;
-  			var h = ("0" + today.getHours()).slice(-2) ;
-  			var m = ("0" + today.getMinutes()).slice(-2) ;
-  			var s = ("0" + today.getSeconds()).slice(-2) ;
-  			var timestamp = y + "-" + Month  + "-" + d + "-" + h + ":" + m + ":" + s;
-
-    		var ref_data = '<?=$현재방->uid?>/'+timestamp+'/'+escape("<?=$this->session->userdata(SESSION_USR_NAME)?>");
-
-    		database.ref(ref_data).set(escape($("#chat").val()));
-    		$("#chat").val("");
-
-    	});
-
-
-    	var starCountRef = firebase.database().ref('<?=$현재방->uid?>/').orderByKey();
-		starCountRef.on('value', function(snapshot) {
-			$(".list").empty();
-			snapshot.forEach(function(childSnapshot) {
-			    var childKey = childSnapshot.key;
-			    var childData = childSnapshot.val();
-			    // console.log(childKey,childData);
-
-				for(var k in childData) {
-					share_data = unescape(childData[k]);
+		share_data = unescape(childData[k]);
           if(share_data.includes("share://")){
             origin_data = share_data.split("share://");
             origin_data = origin_data[1].split(",");
@@ -657,19 +591,22 @@ function files_list (access_token) {
             str = "<br>"+ "<a class='kakao_place' href = "+origin_data[0]+">"+origin_data[0]+"</a>" + "<br>" + origin_data[1] +"<br>" + origin_data[2] + '<img style = "width:250px" src="'+img_tag_src+'">';
             $(".list").append(unescape(k) + " : "+str + "<br>");
           }
+	else{
+          if(unescape(k) =="<?=$this->session->userdata(SESSION_USR_NAME)?>")
+            temp = "<div class='chat1'>"+share_data+ "</div>";
           else
-           $(".list").append(unescape(k) + " : "+share_data + "<br>");
-				}
-			});
-		});
-
-
+            temp = "<div class='chat2'>"+unescape(k) + " : "+share_data+"</div>";
+	}
+          console.log(temp);
+          $(".list").append(temp);
+        }
+      });
+    });
 
     $(".kakao_place").click(function(){
       alert($(this).attr("href"));
     });
        	
->>>>>>> 866068c277e04f9259e8d30bbf5e3d340d058391
 
   });
 
