@@ -91,9 +91,6 @@ class MyFunction extends Base
 
     public function index($index)
     {
-<<<<<<< HEAD
-        //var_dump($index);
-
         if($index==1){
             $timetable['data']=array(
                     array(0,0,0,0,0,0,0,0,0,0,0,0),array(0,0,0,0,0,0,0,0,0,0,0,0),array(0,0,0,0,0,0,0,0,0,0,0,0)
@@ -150,7 +147,7 @@ class MyFunction extends Base
         }
 
         elseif($index==3){
-            $this->load_view('place');
+           $this->load_view('menu/place');
         }
 
         elseif($index==4){
@@ -170,6 +167,12 @@ class MyFunction extends Base
             $this->load_view('todolist',$todolist);
 
         }
+	elseif($index==6){
+	    $data["teampleRoomData"] = $this->get_teample_room_info(0);
+            $data["room_summary"] = $this->room_summary;
+            $this->load_view('menu/reserve', $data);
+	
+	}
 
         elseif($index==5){
             $this->load_view('meetinglog');
@@ -184,30 +187,7 @@ class MyFunction extends Base
 
             $this->load_view('todolist_input');
         }
-=======
-        // var_dump($index);
-
-        // if($index == 3)
-        // {
-        //     $this->load_view('test');
-        // }
-
-        if($index == 2){
-            $data["teampleRoomData"] = $this->get_teample_room_info(0);
-            $data["room_summary"] = $this->room_summary;
-            $this->load_view('menu/reserve', $data);
-            //$this->load_view('menu/reserve');
-        }
-        if($index == 3){
-
-            $this->load_view('menu/place');
-        }
-
-
->>>>>>> 866068c277e04f9259e8d30bbf5e3d340d058391
-
-    	// $data["room"] = $this->roomModel->get_where(array('owner' => $this->session->userdata(SESSION_USR_ID)))->result();
-        // $this->load_view('main',$data);
+        
     }
     private function get_teample_room_info($j){
         $headers = [
