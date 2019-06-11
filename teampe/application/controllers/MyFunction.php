@@ -55,50 +55,49 @@ class MyFunction extends Base
         echo "OK";
     }
 
-    function mb_strrev($str){
-
-
-          $ret = array();
-
-          for ($i=0; $i<mb_strlen($str, "utf-8"); $i++){
-
-             array_unshift($ret, mb_substr($str, $i, 1, "utf-8"));
-
-          }
-          return join($ret);
-
-      }
+    
 
     public function updateTodolist(){
 
 
+  
         $content = $this->input->post('content');
         $description = $this->input->post('description');
         $date1 = $this->input->post('date1');
         $date1 = date('y-m-d', strtotime($date1));
+        $roomNumber = $this->session->userdata(SESSION_USR_ROOM);
+        $id = $this->session->userdata(SESSION_USR_ID);
 
-        $this->db->query("INSERT INTO todolist (content, description, date1) VALUES('$content', '$description', '$date1')");
-  
+        $this->db->query("INSERT INTO todolist (content, description, date1, roomNumber, id) VALUES('$content', '$description', '$date1', '$roomNumber', '$id')");
+
+
 
     }
 
     public function deleteTodolist(){
+        $id = $this->input->post('id');
+        $this->db->query("DELETE FROM todolist WHERE uid = $id;");
 
-        $this->db->query("DELETE FROM todolist");
+    }
 
+    public function completeTodolist(){
+        $id = $this->input->post('id');
+        $this->db->query("UPDATE todolist SET complete=1 WHERE uid=$id");
     }
 
 
     public function index($index)
     {
         if($index==1){
+
             $timetable['data']=array(
                     array(0,0,0,0,0,0,0,0,0,0,0,0),array(0,0,0,0,0,0,0,0,0,0,0,0),array(0,0,0,0,0,0,0,0,0,0,0,0)
                 ,array(0,0,0,0,0,0,0,0,0,0,0,0),array(0,0,0,0,0,0,0,0,0,0,0,0),array(0,0,0,0,0,0,0,0,0,0,0,0),array(0,0,0,0,0,0,0,0,0,0,0,0));
             $timetable['usernum']=0;
             $this->load->database();
             ///방 아이디를 1 대신 넣기
-            $roomquery = $this->db->query("SELECT participant FROM room WHERE uid=3;");
+            $roomNumber = $this->session->userdata(SESSION_USR_ROOM);
+            $roomquery = $this->db->query("SELECT participant FROM room WHERE uid=$roomNumber;");
 
             $row=$roomquery->row();
 
@@ -135,57 +134,98 @@ class MyFunction extends Base
                     $tok[$i][$j]=explode(':',$tok[$i][$j]);
                     $tok[$i][$j][1]=explode(' ',$tok[$i][$j][1]);
                     usort($tok[$i][$j][1],'strcasecmp');
+
+                    $tmp=array();
+
+                  for($k=0;$k<count($tok[$i][$j][1]);$k++){
+                     if(strlen($tok[$i][$j][1][$k])==7){
+                        array_push($tmp,$tok[$i][$j][1][$k]);
+                        array_splice($tok[$i][$j][1],$k,1);
+                        $k=$k-1;
+
+                     }
+                  }
+                  for($k=0;$k<count($tmp);$k++){
+                     array_push($tok[$i][$j][1],$tmp[$k]);
+                  }
                 }
             }
 
             $timetable['tok']=$tok;
-
+            $timetable["participant"] = $this->get_participant($this->session->userdata(SESSION_USR_ROOM));
+            $timetable["현재방"] = $this->roomModel->getRow($this->session->userdata(SESSION_USR_ROOM));
+            
             $this->load_view('scheduler', $timetable);
         }
         elseif($index==2){
-            $this->load_view('classroom');
+            $data["participant"] = $this->get_participant($this->session->userdata(SESSION_USR_ROOM));
+            $data["teampleRoomData"] = $this->get_teample_room_info(0);
+            $data["room_summary"] = $this->room_summary;
+            $data["현재방"] = $this->roomModel->getRow($this->session->userdata(SESSION_USR_ROOM));
+            $this->load_view('menu/reserve', $data);
         }
 
         elseif($index==3){
-           $this->load_view('menu/place');
+           $data["participant"] = $this->get_participant($this->session->userdata(SESSION_USR_ROOM));
+           $data["현재방"] = $this->roomModel->getRow($this->session->userdata(SESSION_USR_ROOM));
+           $this->load_view('menu/place', $data);
         }
 
         elseif($index==4){
             $this->load->database();
+            $roomNumber = $this->session->userdata(SESSION_USR_ROOM);
             $todolist['todolist'] = array();
-            $result = $this->db->query("SELECT * FROM todolist;");
+            $todolist['id']=array();
+            $todolist['uid']=array();
+            $todolist['complete']=array();
+            $result = $this->db->query("SELECT * FROM todolist WHERE roomNumber LIKE " .$roomNumber. ";");
 
             foreach ($result->result() as $row)
             {
                 $a='';
                 $a=$a.'할일 : '.$row->content.'^'.'내용 : '.$row->description.'^'.$row->date1;
                 array_push($todolist['todolist'],$a);
+                array_push($todolist['id'],$row->id);
+                array_push($todolist['uid'],$row->uid);
+                array_push($todolist['complete'],$row->complete);
             }
 
-            
+            $todolist["participant"] = $this->get_participant($this->session->userdata(SESSION_USR_ROOM));
+            $todolist["현재방"] = $this->roomModel->getRow($this->session->userdata(SESSION_USR_ROOM));
 
             $this->load_view('todolist',$todolist);
 
         }
-	elseif($index==6){
-	    $data["teampleRoomData"] = $this->get_teample_room_info(0);
-            $data["room_summary"] = $this->room_summary;
-            $this->load_view('menu/reserve', $data);
-	
-	}
-
         elseif($index==5){
-            $this->load_view('meetinglog');
+            $this->load->database();
+            $log['log'] = array();
+            $roomNumber = $this->session->userdata(SESSION_USR_ROOM);
+            $result = $this->db->query("SELECT * FROM log WHERE roomNumber LIKE " .$roomNumber. ";");
+
+            foreach ($result->result() as $row)
+            {
+                $a='';
+                $a=$a.$row->date.'^'.$row->text;
+                array_push($log['log'],$a);
+            }
+
+            
+            $log["participant"] = $this->get_participant($this->session->userdata(SESSION_USR_ROOM));
+            $log["현재방"] = $this->roomModel->getRow($this->session->userdata(SESSION_USR_ROOM));
+            $this->load_view('log',$log);
         }
 
         else if ($index==100){
-            $session_array = array(SESSION_USR_ID => 1064377830);
-            $this->session->set_userdata($session_array);
-            $this->load_view('schedulerinput');
+            // $session_array = array(SESSION_USR_ID => 1064377830);
+            // $this->session->set_userdata($session_array);
+            $data["participant"] = $this->get_participant($this->session->userdata(SESSION_USR_ROOM));
+            $data["현재방"] = $this->roomModel->getRow($this->session->userdata(SESSION_USR_ROOM));
+            $this->load_view('schedulerinput', $data);
         }
         else if ($index==200){
-
-            $this->load_view('todolist_input');
+            $data["participant"] = $this->get_participant($this->session->userdata(SESSION_USR_ROOM));
+            $data["현재방"] = $this->roomModel->getRow($this->session->userdata(SESSION_USR_ROOM));
+            $this->load_view('todolist_input', $data);
         }
         
     }
@@ -286,5 +326,40 @@ class MyFunction extends Base
         $date = date("Y-m-d",$date);
 
         die(json_encode(array("day" => $date , "data" => $this->get_teample_room_info($day) , "summary" => $this->room_summary)));
+    }
+
+    public function registerLog()
+    {
+        // $userid = $this->input->post('userid');
+        // $data = json_decode($this->input->post('text'));
+        $roomNumber = $this->input->post('room');
+        $data = $this->input->post('text');
+        $sql = "INSERT INTO log(roomNumber, text, date) VALUES ('" .$roomNumber. "','" .$data. "','" . date("Y-m-d"). "')";
+        $this->db->query($sql);
+
+        // $sql = "SELECT * FROM `log` WHERE `roomNumber` = ".$roomNumber;
+        // $query = $this->db->query($sql);
+        // die(json_encode($query->result()));
+
+        $session_array = array(
+                  "recording" => "end",
+              );
+        
+        $this->session->set_userdata($session_array);
+
+    }
+
+    public function recording(){
+        $recording = $this->session->userdata('recording');
+        if($recording)
+            $session_array = array(
+                  "recording" => false,
+              );
+        else
+            $session_array = array(
+                  "recording" => true,
+              );
+        
+        $this->session->set_userdata($session_array);
     }
 }

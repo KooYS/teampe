@@ -76,13 +76,136 @@ class Base extends CI_Controller
         return $mkpath;
     }
 
+
+function uploadFile($access_token, $file, $mime_type, $name) {
+
+    $User_Agent = 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.43 Safari/537.31';
+
+        $request_headers = array();
+        $request_headers[] = 'User-Agent: '. $User_Agent;
+        $request_headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $file);
+        curl_setopt($ch, CURLOPT_HTTPGET, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $request_headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+
+   $GAPIS = 'https://www.googleapis.com/';
+
+    $ch1 = curl_init();
+
+    // don't do ssl checks
+    curl_setopt($ch1, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch1, CURLOPT_SSL_VERIFYHOST, false);
+
+    // do other curl stuff
+    curl_setopt($ch1, CURLOPT_URL, $GAPIS . 'upload/drive/v3/files?uploadType=media');
+    curl_setopt($ch1, CURLOPT_BINARYTRANSFER, 1);
+    curl_setopt($ch1, CURLOPT_POST, 1);
+    curl_setopt($ch1, CURLOPT_POSTFIELDS, $output);
+    curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+
+    // set authorization header
+    curl_setopt($ch1, CURLOPT_HTTPHEADER, array('Content-Type: '.$mime_type, 'Authorization: Bearer ' . $access_token) );
+
+    // execute cURL request
+    $response=curl_exec($ch1);
+    if($response === false){
+        $output = 'ERROR: '.curl_error($ch1);
+    } else{
+        $output = $response;
+    }
+
+    // close first request handler
+    curl_close($ch1);
+
+    // now let's get the ID of the file we just created
+    // and submit the file metadata
+    $this_response_arr = json_decode($response, true);
+
+    if(isset($this_response_arr['id'])){
+        $this_file_id = $this_response_arr['id'];
+
+        $ch2 = curl_init();
+
+        // don't do ssl checks
+        curl_setopt($ch2, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch2, CURLOPT_SSL_VERIFYHOST, false);
+
+        // do other curl stuff
+        curl_setopt($ch2, CURLOPT_URL, $GAPIS . 'drive/v3/files/'.$this_file_id);
+        curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, 'PATCH');
+
+        // initialize fields to submit
+        $post_fields = array();
+
+        // remove extension
+        // $this_file_name = explode('.', $name);
+
+        // submit name field
+        // $post_fields['name']=$this_file_name[0];
+        $post_fields['name']=$name;
+
+        curl_setopt($ch2, CURLOPT_POSTFIELDS, json_encode($post_fields));
+
+        // return response as a string
+        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+
+        // set authorization header
+        curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token) );
+
+        // execute cURL request
+        $response=curl_exec($ch2);
+        if($response === false){
+            $output = 'ERROR: '.curl_error($ch2);
+        } else{
+            $output = $response;
+        }
+
+        // close second request handler
+        curl_close($ch2);
+    }
+
+    return $output;
+}
+
+
     public function ajax_img_upload()
     {
+        $token = $this->input->post("token");
+        if($token == null){
+            die("token_error");
+        }
+        else{
+            if (isset($_FILES['uploadfile'])) {
 
-        $ret_msg = "error";
+            $uploaddir = Base::make_directory("temp");
+            $filename = Base::getUniqueString(pathinfo($_FILES['uploadfile']['name'], PATHINFO_EXTENSION));
+            $file = $uploaddir ."/". $filename;
+            if (!move_uploaded_file($_FILES['uploadfile']['tmp_name'], $file)) {
+                die ("error");
+            }
+                $mime_type = $_FILES['uploadfile']['type'];
+                $filepath = base_url()."../../upload/temp/".$filename;
+                $result = Base::uploadFile($token,  $filepath, $mime_type, $filename);
+                die ($result);
+            } 
+            else
+                echo "nofile";
+        }   
+    }
+
+    public function ajax_multi_img_upload()
+    {
+         $ret_msg = "error";
         if (!empty($_FILES["uploadfile"])) {
+            var_dump($_FILES["uploadfile"]);
             
-
             $uploaddir = Base::make_directory("temp");
             $file_array = array();
             for ($i = 0; $i < count($_FILES['uploadfile']['name']); $i++) {
@@ -101,25 +224,6 @@ class Base extends CI_Controller
             die(json_encode(array("files"=>$file_array)));
         }
         die ($ret_msg);
-    }
-
-    public function ajax_multi_img_upload()
-    {
-
-        if (isset($_FILES['uploadfile'])) {
-            $uploaddir = Base::make_directory("temp");
-            $filename_array = array();
-            for ($i = 0; $i < count($_FILES['uploadfile']['name']); $i++) {
-                $filename = Base::getUniqueString(pathinfo($_FILES['uploadfile']['name'][$i], PATHINFO_EXTENSION));
-                $file = $uploaddir . "/" . $filename;
-                if (!move_uploaded_file($_FILES['uploadfile']['tmp_name'][$i], $file)) {
-                    die ("error");
-                }
-                array_push($filename_array, $filename);
-            }
-            die (json_encode($filename_array));
-        } else
-            echo "nofile";
     }
 
 
@@ -143,12 +247,47 @@ class Base extends CI_Controller
         }
     }
 
+    public function get_participant($uid = 0){
+        if($uid == 0){
+            $me = $this->session->userdata(SESSION_USR_ID);
+            $sql = "SELECT * FROM room WHERE participant LIKE '%{$me}%' OR owner=$me";
+            $query = $this->db->query($sql);
+            $roomParticipant = $query->result();
+            $room_usrData = [];
+            foreach ($roomParticipant as $key => $val) {
+                $usrData = [$val->uid];
+                $temp = $val->participant;
+                $temp = explode(',', $temp);
+                $temp = array_filter($temp);
+                foreach ($temp as $key => $val2) {
+                    array_push($usrData,  $this->db->get_where('usr', array('id' => $val2))->row());
+                }
+                array_push($room_usrData,  $usrData);
+            }
 
+            return $room_usrData;
+
+        }
+        else{
+            $roomParticipant = $this->db->get_where('room', array('uid' => $uid))->row();
+            $roomParticipant = $roomParticipant->participant;
+            $roomParticipant = explode(',', $roomParticipant);
+            $roomParticipant =  array_filter($roomParticipant);
+            $usrData = [];
+            foreach ($roomParticipant as $key => $val) {
+                array_push($usrData,  $this->db->get_where('usr', array('id' => $val))->row());
+            }
+            // $participantData = 
+            return $usrData;
+        }
+    }
     public function get_url_metadata(){
         $url = $this->input->post("url");
+
         libxml_use_internal_errors(true);
-        $c = file_get_contents($url);
         $d = new DomDocument();
+        $c = file_get_contents($url);
+
         $d->loadHTML($c);
         $xp = new domxpath($d);
         $title = "";

@@ -4,7 +4,7 @@
 
 <input type="hidden" id="session_usr_uid" value="<?= $me ?>"/>
 
-<script type="text/javascript" src="<?= base_url() ?>assets/js/custom/app.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>assets/js/custom/app.js?version=1.1"></script>
 
 
 
@@ -64,6 +64,7 @@
 		background-color: #e5e5e5;
         border: solid;
         border-color: #ffffff;
+        width: 60%;
 	}
 	.mypopup .popup-ok {
 		font-size: 16px;
@@ -82,7 +83,7 @@
         <div class="popup-content">
         	<span>제목 : </span>
         	<input class="popup-text" type="text" id="make_room_title"></input>
-        	<a class="popup-ok" onclick="onMakeRoom()">OK</a>
+        	<a class="popup-ok" onclick="onMakeRoom(); window.location.reload(true);" >OK</a>
 
         </div>
     </div>
@@ -122,6 +123,20 @@
 	        }
         });
     }
+
+</script>
+<script>
+
+  function openNav() {
+    $("#mySidenav").width( '200px' );
+    $(".sidenav_overlay").fadeIn();
+  }
+
+  function closeNav() {
+    $("#mySidenav").width( '0' );
+    $(".sidenav_overlay").fadeOut();
+  }
+
 
 </script>
 </body>

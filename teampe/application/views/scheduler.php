@@ -16,6 +16,15 @@
     position: absolute;
 }
 
+.material-icons.home{
+  color: #ffffff;
+  font-size: 20px;
+  right: 20%;
+  bottom: 40%;
+  position: absolute;
+
+}
+
 .pro_img{
     border-radius: 50%;
     margin-left: 10px;
@@ -35,7 +44,7 @@
 }
 
 td {
-  width:8%;
+  width: 8%;
   height: 30px;
   border: 1px solid #f3f5fa;
   text-align: center;
@@ -43,7 +52,7 @@ td {
 }
 
 .table{
-  width: 98%;
+
   height:100%;
   margin-top: 20px;
   margin-left: 1%;
@@ -53,6 +62,7 @@ td {
   font-family: NotoSansKr-Regular;
   color: #232323;
   font-size: 5px;
+  max-width: 98%;
 }
 
 .schedule_btn{
@@ -63,7 +73,7 @@ td {
   text-align: center;
   color: #315bb0;
   left: 50%;
-  bottom: 10%;
+  bottom: 7%;
   transform: translate(-50%,50%);
   position: absolute;
 
@@ -101,11 +111,9 @@ td {
   overflow: auto;
   top: 15%;
   color: #315bb0;
-  padding: 20px;
+  padding-top: 20px;
   line-height: 30px;
-  display: -webkit-flex;
-  align-items: space-around;
-  justify-content: center;
+
 }
 
 .buildinglist{
@@ -121,6 +129,31 @@ td {
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   font-family: NotoSansKr;
+}
+
+.sche_top{
+  font-weight: bold;
+  font-size: 20px;
+}
+.sche_hr{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 85%;
+}
+
+.sche_table{
+  width: 20%;
+  margin-top: -1%;
+  margin-right: 2%;
+  border: 2px solid #f3f5fa;
+  border-radius: 10px;
+  text-align: center;
+  font-family: NotoSansKr-Regular;
+  color: #232323;
+  font-size: 10px;
+}
+.sche_info{
+  height: 5px;
 }
 
 
@@ -163,26 +196,34 @@ td {
   <div class="profile">
   <div class="sidenav_overlay" onclick="closeNav()"></div>
   <div id="mySidenav" class="sidenav">
+    <span class="room_name"><?=$현재방->name?></span>
     <hr>
     <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
-    <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/2">팀플룸</a>
     <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
     <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
     <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
-    <a href="<?=base_url()?>index.php/MyFunction/index/6">자료공유</a>
     <hr>
     <p class="conv">대화참여자</p>
-    <img class="pro_img1" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
-    <span class="part_name"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
+    <?php
+    foreach ($participant as $key => $value) {
+
+      echo '<div class="part_name">'.'<img class="pro_img1" src="'.$value->image.'">';
+      echo $value->name.'</div>';
+
+    }
+
+    ?>
   </div>
-  
+
 
     <i class="material-icons menu" onclick="openNav()">menu</i>
     <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
     <div class="schedule_name"><p>시간표</p></div>
-    <a href="javascript:history.back()"><i class="material-icons bi">keyboard_backspace</i></a>
+    <a onclick="location.href='<?=base_url()?>index.php/Main'"><i class="material-icons home">home</i></a>
+    <a onclick="location.href='<?=base_url()?>index.php/Room/index/'+<?=$this->session->userdata(SESSION_USR_ROOM)?>"><i class="material-icons bi">chat</i></a>
   </div>
-  
+
   <div class="table">
   <table>
         <?php
@@ -201,7 +242,7 @@ td {
           echo '<tr>';
           echo '<td>'.($i+1).'교시</td>';
           for($j=0;$j<7;$j++){
-
+            
             if ($data[$j][$i]==$usernum){
               if($i<9){
                             echo '<td id="a'.$j.$i.'" style="cursor:pointer;background-color:skyblue"
@@ -213,7 +254,37 @@ td {
 
 
           }
-          else{
+          else if ($data[$j][$i]/$usernum>=0.75){
+              if($i<9){
+                            echo '<td id="a'.$j.$i.'" style="cursor:pointer;background-color:green"
+                            onclick="viewEmptyBuilding(this.id,'.$j.','.$i.','.'0'.');">&nbsp</td>';
+                          }
+              else{
+                echo '<td id="a'.$j.$i.'" style="background-color:green">&nbsp</td>';
+              }
+
+          }
+          else if ($data[$j][$i]/$usernum>=0.5){
+              if($i<9){
+                            echo '<td id="a'.$j.$i.'" style="cursor:pointer;background-color:yellow"
+                            onclick="viewEmptyBuilding(this.id,'.$j.','.$i.','.'0'.');">&nbsp</td>';
+                          }
+              else{
+                echo '<td id="a'.$j.$i.'" style="background-color:yellow">&nbsp</td>';
+              }
+
+          }
+          else if ($data[$j][$i]/$usernum>=0.25){
+              if($i<9){
+                            echo '<td id="a'.$j.$i.'" style="cursor:pointer;background-color:red"
+                            onclick="viewEmptyBuilding(this.id,'.$j.','.$i.','.'0'.');">&nbsp</td>';
+                          }
+              else{
+                echo '<td id="a'.$j.$i.'" style="background-color:red">&nbsp</td>';
+              }
+
+          }
+          else if($data[$j][$i]==0){
             if($i<9){
                         echo '<td id="a'.$j.$i.'" style="cursor:pointer; background-color:white" onclick="viewEmptyBuilding(this.id,'.$j.','.$i.','.'0'.');">&nbsp</td>';
                       }
@@ -221,6 +292,7 @@ td {
               echo '<td id="a'.$j.$i.'" style="background-color:white">&nbsp</td>';
             }
           }
+
           }
           echo '</tr>';
 
@@ -232,11 +304,35 @@ td {
 <?php
 
   for ($i=0;$i<6;$i++){
+    switch ($i) {
+      case 0:
+        $dow='월';
+        break;
+      case 1:
+        $dow='화';
+        break;
+      case 2:
+        $dow='수';
+        break;
+      case 3:
+        $dow='목';
+        break;
+      case 4:
+        $dow='금';
+        break;
+      case 5:
+        $dow='토';
+        break;
+
+      default:
+        # code...
+        break;
+    }
     for ($j=0;$j<9;$j++){
-      
+
         echo '<div id="myModal'.($i+1).$j.'" class="modal">
         <div class="modal-content">
-          <div>';
+          <div><div class="sche_top">'.$dow.'요일 '.strval($j+1).'교시'.'</div><hr class="sche_hr">';
         for($k=0;$k<count($tok[9*$i+$j]);$k++){
           echo '<div style="text-align:center;"><div style="cursor:pointer;display:inline;" onclick="viewEmptyBuilding(this.id,'.($i+1).','.$j.','.$k.');">'.$tok[9*$i+$j][$k][0].'</div></div>';
         }
@@ -255,7 +351,7 @@ td {
         echo  '</div>
         </div>';
 
-      
+
 
 
 
@@ -265,6 +361,22 @@ td {
 
 
   <button class="schedule_btn"onclick="location.href='<?=base_url()?>index.php/MyFunction/index/100'">스케줄 입력</button>
+
+  <table class="sche_table" align="right">
+    <tr>
+      <td class="shce_info" style="background-color: red;"></td>
+      <td>25%</td>
+      <td class="shce_info" style="background-color: green;"></td>
+      <td>75%</td>
+    </tr>
+    <tr>
+      <td class="shce_info" style="background-color: yellow;"></td>
+      <td>50%</td>
+      <td class="shce_info" style="background-color: skyblue;"></td>
+      <td>100%</td>
+    </tr>
+    
+  </table>
 
 
 
@@ -283,6 +395,8 @@ td {
     $("#mySidenav").width( '0' );
     $(".sidenav_overlay").fadeOut();
   }
+
+
 
 
 

@@ -15,7 +15,12 @@ class Main extends Base
 
     public function index()
     {
-    	$data["room"] = $this->roomModel->get_where(array('owner' => $this->session->userdata(SESSION_USR_ID)))->result();
+
+        $me = $this->session->userdata(SESSION_USR_ID);
+        $sql = "SELECT * FROM room WHERE participant LIKE '%{$me}%' OR owner=$me";
+        $query = $this->db->query($sql);
+        $data["room"] = $query->result();
+        $data["participant"] = $this->get_participant();
         $this->load_view('main',$data);
     }
     public function ajax_make_room()

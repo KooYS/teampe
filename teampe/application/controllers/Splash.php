@@ -11,6 +11,9 @@ class Splash extends Base
 
     public function index()
     {
+        $this->session->set_userdata(array(
+            "token" => $this->input->get('token'),
+        ));
         $this->load_view('splash');
     }
     

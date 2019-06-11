@@ -1,14 +1,13 @@
+#!/usr/bin/php
+<?php
 
-
-<?php 
-  
-  function send_notification ($tokens)
+function send_notification ($tokens,$message)
   {
 
     $url = 'https://fcm.googleapis.com/fcm/send';
     $fields = array(
        'registration_ids' => array($tokens),
-       'notification' => array("sound" => "default" , "title" => "팀프" , "body" => "테스트1234")
+       'notification' => array("sound" => "default" , "title" => "팀프" , "body" =>  $message)
       );
 
     $headers = array(
@@ -32,37 +31,17 @@
        curl_close($ch);
        return $result;
   }
-  
-
-  //데이터베이스에 접속해서 토큰들을 가져와서 FCM에 발신요청
-  // $conn = mysqli_connect("http://52.79.64.192", "root", "password", "teampe");
-
-  // $sql = "Select Token From usr Where id = 누른사람카톡아이디";
-
-  // $result = mysqli_query($conn,$sql);
 
 
-  if(isset($_POST["Token"])){
-    $token = $_POST["Token"];
+
+$conn = mysqli_connect("localhost:3306", "root", "password", "teampe");
+$sql = "SELECT *,DATEDIFF(now(), `date1`) as day FROM `todolist` JOIN `usr` USING (`id`)";
+$result = mysqli_query($conn, $sql);
+while($row = mysqli_fetch_array($result)) {
+  if($row['day'] == 0 && $row['complete'] != 1){
+    send_notification($row['token'],$row['content']);
   }
+}
 
 
-  
-
-  // $token = 'eVha9XVA2Ws:APA91bEAUZBSOjozqKtqPKv7Cozio9rec7EJaAeShhwP6YGLv8yNY5RGCqvelZ5xDTVbfLQW60zyhhfA0hIzXK5-9CLZT1-_Uh1iR6WKkx58yu_cMV7AXmyhiLXmUDsdMmmlF11zEgXf';
-  // $tokens = array();
-
-  // if(mysqli_num_rows($result) > 0 ){
-
-  //   while ($row = mysqli_fetch_assoc($result)) {
-  //     $tokens[] = $row["Token"];
-  //   }
-  // }
-
-  // mysqli_close($conn);
-  
-//메시지가 투두리스트 해야할일 text, 
-  $message_status = send_notification($token);
-
-
- ?>
+?>

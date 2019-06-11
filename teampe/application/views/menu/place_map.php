@@ -17,6 +17,68 @@
 .placeinfo .title {font-weight: bold; font-size:14px;border-radius: 6px 6px 0 0;margin: -1px -1px 0 -1px;padding:10px; color: #fff;background: #2865bc url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
 .placeinfo .tel {color:#0f7833;}
 .placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
+
+    .material-icons.bi{
+        color: #ffffff;
+        font-size: 20px;
+        right: 10%;
+        bottom: 40%;
+        position: absolute;
+    }
+    .material-icons.home{
+      color: #ffffff;
+      font-size: 20px;
+      right: 20%;
+      bottom: 40%;
+      position: absolute;
+    
+    }    
+    
+    .pro_img{
+        border-radius: 50%;
+        margin-left: 10px;
+        width: 60px;
+        border: solid;
+        border-color: #ffffff;
+        margin:15px;
+    }
+    .schedule_name{
+      font-size: 20px;
+      bottom: 25%;
+      position: absolute;
+      color: #ffffff;
+      text-align: center;
+      margin-left: 45%;
+    }
+
+    .input_map{
+        border: solid;
+        border-color: #315bb0;
+        border-radius: 5px;
+        vertical-align: middle;
+        margin-top: 30px;
+        margin-left: 20%;
+        padding: 5px;
+        width: 60%;
+
+    }
+
+    input::placeholder{
+        color: #58ACFA; 
+        font-family: NotoSansKR-Medium.woff;
+    }
+
+    .map{
+        width:100%;
+        height:100%;
+        position:relative;
+        overflow:hidden;
+        border: solid;
+        border-radius: 5px;
+        border-color: #315bb0;
+        margin-top: 30px;
+
+    }
 </style>
 
 
@@ -24,14 +86,40 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c47884e2681e2a2a01b8e140dbc21ffb&libraries=services"></script>
 
-<input type="text" name="keyword" id="keyword_for_map" placeholder="지하철역입력">
+<div class="profile">
+  <div class="sidenav_overlay" onclick="closeNav()"></div>
+  <div id="mySidenav" class="sidenav">
+    <span class="room_name"><?=$현재방->name?></span>
+    <hr>
+    <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/2">팀플룸</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
+    <hr>
+    <p class="conv">대화참여자</p>
+    <?php
+    foreach ($participant as $key => $value) {
+
+      echo '<div class="part_name">'.'<img class="pro_img1" src="'.$value->image.'">';
+      echo $value->name.'</div>';
+    
+    }
+
+    ?>
+  </div>
+  
+
+    <i class="material-icons menu" onclick="openNav()">menu</i>
+    <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
+    <div class="schedule_name"><p>장소추천</p></div>
+    <a onclick="location.href='<?=base_url()?>index.php/Main'"><i class="material-icons home">home</i></a>
+    <a onclick="location.href='<?=base_url()?>index.php/Room/index/'+<?=$this->session->userdata(SESSION_USR_ROOM)?>"><i class="material-icons bi">chat</i></a>
+  </div>
+<input type="text" class="input_map" name="keyword" id="keyword_for_map" placeholder="장소를 입력하세요.">
 <div class="map_wrap">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+    <div id="map" class="map"></div>
 </div>
-
-<div id="data" style="width:100%;height:350px;"></div>
-
-
 
 
 <script type="text/javascript">
@@ -126,6 +214,7 @@ function displayPlaces(places) {
             // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
             (function(marker, place) {
                 daum.maps.event.addListener(marker, 'click', function() {
+                    map.setCenter(new daum.maps.LatLng(place.y, place.x));
                     displayPlaceInfo(place);
                 });
             })(marker, places[i]);

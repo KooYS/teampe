@@ -17,6 +17,14 @@ $this->load->database();
     bottom: 40%;
     position: absolute;
 }
+.material-icons.home{
+  color: #ffffff;
+  font-size: 20px;
+  right: 20%;
+  bottom: 40%;
+  position: absolute;
+
+}
 
 .pro_img{
     border-radius: 50%;
@@ -115,7 +123,7 @@ td {
 
     axios({
       method: 'post',
-      url: '/test2/teampe/teampe/index.php/MyFunction/updateschedule',
+      url: '/teampe/index.php/MyFunction/updateschedule',
       data: fd
     }).then(function (response) {
       if(response.data === "OK"){
@@ -135,24 +143,32 @@ td {
 <div class="profile">
 <div class="sidenav_overlay" onclick="closeNav()"></div>
 <div id="mySidenav" class="sidenav">
+  <span class="room_name"><?=$현재방->name?></span>
   <hr>
   <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
-  <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
+  <a href="<?=base_url()?>index.php/MyFunction/index/2">팀플룸</a>
   <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
   <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
   <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
-  <a href="<?=base_url()?>index.php/MyFunction/index/6">자료공유</a>
   <hr>
   <p class="conv">대화참여자</p>
-  <img class="pro_img1" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
-  <span class="part_name"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
+  <?php
+    foreach ($participant as $key => $value) {
+
+      echo '<div class="part_name">'.'<img class="pro_img1" src="'.$value->image.'">';
+      echo $value->name.'</div>';
+    
+    }
+
+    ?>
 </div>
 
 
   <i class="material-icons menu" onclick="openNav()">menu</i>
   <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
   <div class="schedule_name"><p>시간표입력</p></div>
-  <a href="javascript:history.back()"><i class="material-icons bi">keyboard_backspace</i></a>
+  <a onclick="location.href='<?=base_url()?>index.php/Main'"><i class="material-icons home">home</i></a>
+  <a onclick="location.href='<?=base_url()?>index.php/Room/index/'+<?=$this->session->userdata(SESSION_USR_ROOM)?>"><i class="material-icons bi">chat</i></a>
 </div>
 
 <div class="table">
@@ -183,7 +199,7 @@ for($i=0;$i<12;$i++){
 </table>
 </div>
 
-<button class="scheduleSave_btn" onclick="location.href='<?=base_url()?>index.php/MyFunction/index/1';updateschedule(schedule)">스케줄 저장</button>
+<button class="scheduleSave_btn" onclick="location.href='<?=base_url()?>index.php/MyFunction/index/1';updateschedule(schedule);">스케줄 저장</button>
 
 <script>
 
@@ -196,6 +212,8 @@ for($i=0;$i<12;$i++){
     $("#mySidenav").width( '0' );
     $(".sidenav_overlay").fadeOut();
   }
+
+
 
 
 </script>

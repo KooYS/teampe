@@ -17,11 +17,13 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/plugins/bootstrap-wysihtml5/wysiwyg-color.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/css/bootstrap.min.css">
 
-<style>
 
+
+
+<style>
 @font-face {
 
-    font-family: 'Noto Sans KR';
+    font-family: 'NotoSansKR';
     font-style: normal;
     font-weight: 500;
     src: url(/fonts/NotoSansKr/NotoSansKR-Medium.woff2) format('woff2'),
@@ -45,7 +47,7 @@
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 30px;
-  z-index: 10001;
+  z-index: 10010;
 }
 
 .sidenav_overlay{
@@ -98,18 +100,27 @@
   font-size: 15px;
   color: #315bb0;
   margin-left: 10%;
+  font-weight: bold;
+  font-family: 'NotoSansKR-Medium';
 }
 
 .pro_img1{
-    border-radius: 50%;
-    margin-left: 10px;
-    width: 45px;
-    margin:15px;
+  border-radius: 50%;
+  margin-left: 10px;
+  width: 45px;
+  margin:10px;
     }
-
 .part_name{
   color: #315bb0;
   font-size: 15px;
+  font-family: 'NotoSansKR-Medium';
+}
+.room_name {
+  font-size: 20px;
+  color: #315bb0;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 hr {
@@ -123,6 +134,68 @@ hr {
   .sidenav a {font-size: 18px;}
 }
 
+
+ .waiting{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10001;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .loader {
+      margin-left: -15px;
+      margin-top: -15px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transform: -webkit-translate(-50%, -50%);
+      transform: -moz-translate(-50%, -50%);
+      transform: -ms-translate(-50%, -50%);
+
+      border: 6px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 6px solid black;
+      width: 30px;
+      height: 30px;
+      -webkit-animation: spin 2s linear infinite; /* Safari */
+      animation: spin 2s linear infinite;
+    }
+
+    .login_btn {
+      left: 50%;
+      bottom: 25%;
+      transform: translate(-50%,50%);
+      position: absolute;
+      z-index: 2;
+
+    }
+    .splash{
+        background: url("<?=base_url()?>assets/images/main/login.png") no-repeat center;
+        background-size: cover;
+        position: absolute;
+        top: 50%; right: 50%;
+        transform: translate(50%,-50%);
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    
 </style>
 
 
@@ -140,6 +213,7 @@ hr {
     <script type="text/javascript" src="<?= base_url() ?>assets/plugins/raty-fa/jquery.raty-fa.js"></script>
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>    
     <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script>
 
@@ -161,6 +235,5 @@ hr {
 
     </script>
 <body>
-
 
 

@@ -1,67 +1,5 @@
 <?php
 
-var_dump($token);
-var_dump($refreshToken);
-
-
-$GAPIS = 'https://www.googleapis.com/';
-
-function uploadFile($access_token, $file, $mime_type, $name) {
-    global $GAPIS;
-
-    $ch1 = curl_init();
-
-    // don't do ssl checks
-    curl_setopt($ch1, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch1, CURLOPT_SSL_VERIFYHOST, false);
-
-    $my_beautiful_body = '
---joes_awesome_divider
-Content-Type: application/json; charset=UTF-8
-
-{
-    "name": "'.$name.'"
-}
-
---joes_awesome_divider
-Content-Type: '.$mime_type.'
-
-'.file_get_contents($file).'
-
---joes_awesome_divider--
-    ';
-
-    // do other curl stuff
-    curl_setopt($ch1, CURLOPT_URL, 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart');
-    curl_setopt($ch1, CURLOPT_POST, 1);
-    curl_setopt($ch1, CURLOPT_POSTFIELDS, $my_beautiful_body);
-    curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
-
-    // set authorization header
-    curl_setopt($ch1, CURLOPT_HTTPHEADER, array('Content-Type: multipart/related; boundary=joes_awesome_divider', 'Authorization: Bearer ' . $access_token) );
-
-    // $response=curl_exec($ch1);
-    // if($response === false){
-    //     $output = 'ERROR: '.curl_error($ch1);
-    // } else{
-    //     $output = $response;
-    // }
-    // var_dump($output);
-
-    // // close first request handler
-    // curl_close($ch1);
-
-    // return $output;
-}
-
-
-$mime_type = 'image/png';  // could be 'image/jpeg', etc.
-$new_name = 'My Video';
-$the_file_and_path = base_url()."../upload/temp/123.png";
-$result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
-
-
-
 ?>
 
 <head>
@@ -72,45 +10,47 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
 
 @font-face {
 
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 500;
-    src: url(/fonts/NotoSansKr/NotoSansKR-Medium.woff2) format('woff2'),
-         url(/fonts/NotoSansKr/NotoSansKR-Medium.woff) format('woff'),
-         url(/fonts/NotoSansKr/NotoSansKR-Medium.otf) format('opentype');
-       }
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  src: url(/fonts/NotoSansKr/NotoSansKR-Medium.woff2) format('woff2'),
+       url(/fonts/NotoSansKr/NotoSansKR-Medium.woff) format('woff'),
+       url(/fonts/NotoSansKr/NotoSansKR-Medium.otf) format('opentype');
+     }
 
 .profile{
-    background-image: linear-gradient(to right,#147dd9,#3f4a9c); 
-    position: fixed;
-    width: 100%;
-    height: 90px;
-    z-index: 1000;
+  background-image: linear-gradient(to right,#147dd9,#3f4a9c); 
+  position: fixed;
+  width: 100%;
+  height: 90px;
+  z-index: 1000;
   }
 .pro_img{
-    border-radius: 50%;
-    margin-left: 10px;
-    width: 60px;
-    border: solid;
-    border-color: #ffffff;
-    margin:15px;
+  border-radius: 50%;
+  margin-left: 10px;
+  width: 60px;
+  border: solid;
+  border-color: #ffffff;
+  margin:15px;
     }
 .pro_img1{
-    border-radius: 50%;
-    margin-left: 10px;
-    width: 45px;
-    border: solid;
-    border-color: #315bb0;
-    margin:15px;
+  border-radius: 50%;
+  margin-left: 10px;
+  width: 45px;
+  margin:10px;
     }
+.part_name{
+  color: #315bb0;
+  font-size: 15px;
+}
 .profile .nickname{
-    color: #ffffff;
-    top: 50%;
-    margin-left: -15px;
-    transform: translate(50%,-50%);
-    position: absolute;
-    font-family: Noto Sans KR;
-    }
+  color: #ffffff;
+  top: 50%;
+  margin-left: -15px;
+  transform: translate(50%,-50%);
+  position: absolute;
+  font-family: Noto Sans KR;
+  }
 
 
 .material-icons.add{
@@ -156,7 +96,7 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
   background-color: #e5e5e5;
   border: solid;
   border-color: #ffffff;
-  width:80%;
+  width:78%;
 
 }
 
@@ -168,6 +108,7 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
   color: #0a85d7; 
   border-color: #ffffff;
   background-color: #ffffff;
+  padding: 5px;
 
 }
 
@@ -186,11 +127,9 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
   margin-right: auto;
 }
 .room_name1 {
-  font-size: 15px;
+  font-size: 20px;
   color: #ffffff;
-  display: inline-table;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 20px;
 
 }
 
@@ -219,7 +158,7 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
   display: inline-block;
   clear: both;
   float: right;
-  max-width: 180px;
+  max-width: 620px;
   position: relative;
 }
 
@@ -249,7 +188,7 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
   display: inline-block;
   clear: both;
   float: left;
-  max-width: 180px;
+  max-width: 620px;
   position: relative;
 
 }
@@ -276,14 +215,31 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
   
 }
 
-.part_name{
-  color: #315bb0;
-  font-size: 15px;
-}
+
 
 
 </style>
 </head>
+
+<!-- <script>
+    var fd = new FormData();
+    var img = i;
+    fd.append('id', id);
+    axios({
+      method: 'get',
+      url: '/teampe/index.php/Login/',
+      data: fd
+    });      
+    
+</script> -->
+<!-- <script>
+  var img
+  $.ajax({
+    url: '/teampe/index.php/Login'
+    type: 'GET'
+    data
+  })
+</script> -->
 
   
   <div class="profile">
@@ -292,16 +248,22 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
     <span class="room_name"><?=$현재방->name?></span>
     <hr>
     <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
-    <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/2">팀플룸</a>
     <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
     <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
     <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
-    <a href="<?=base_url()?>index.php/MyFunction/index/6">자료공유</a>
     <hr>
     <p class="conv">대화참여자</p>
-    <img class="pro_img1" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
-    <span class="part_name"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
-  </div>
+    <?php
+    foreach ($participant as $key => $value) {
+
+      echo '<div class="part_name">'.'<img class="pro_img1" src="'.$value->image.'">';
+      echo $value->name.'</div>';
+    
+    }
+
+    ?>
+    </div>
   
 
     <i class="material-icons menu" onclick="openNav()">menu</i>
@@ -310,16 +272,13 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
 
     <i class="material-icons pi">person_add</i>
     <i class="material-icons ni">notifications_none</i>
-    <a href="javascript:history.back()"><i class="material-icons bi">keyboard_backspace</i></a>
+    <a onclick="location.href='<?=base_url()?>index.php/Main'"><i class="material-icons bi">home</i></a>
   </div>
 
-  <a href="kakaolink://send?appkey=60b4798e25980dfd4fc4a9ce562f2f27&appver=1.0&linkver=4.0&template_json=%7B%22P%22%3A%7B%22TP%22%3A%22Feed%22%2C%22ME%22%3A%22%24%7BME%7D%22%2C%22SID%22%3A%22capri_292062%22%2C%22DID%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22SNM%22%3A%22teampe%22%2C%22SIC%22%3A%22https%3A%2F%2Fk.kakaocdn.net%2F14%2Fdn%2FbtqbjCnoZ8A%2FMyiKigHpJbSKusX0u3TPL1%2Fo.jpg%22%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LCP%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%2C%22LCM%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%7D%2C%22SL%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%22%2C%22LCP%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%2C%22LCM%22%3A%22kakao1ec48789438b105c234369e63d0d2e76%3A%2F%2Fkakaolink%22%7D%2C%22VA%22%3A%226.0.0%22%2C%22VI%22%3A%225.9.8%22%2C%22VW%22%3A%222.5.1%22%2C%22VM%22%3A%222.2.0%22%2C%22FW%22%3Atrue%2C%22RF%22%3A%22out-client%22%7D%2C%22C%22%3A%7B%22THC%22%3A1%2C%22THL%22%3A%5B%7B%22TH%22%3A%7B%22THU%22%3A%22http%3A%2F%2Fmud-kage.kakao.co.kr%2Fdn%2FQ2iNx%2FbtqgeRgV54P%2FVLdBs9cvyn8BJXB3o7N8UK%2Fkakaolink40_original.png%22%2C%22W%22%3A400%2C%22H%22%3A400%7D%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D%7D%5D%2C%22TI%22%3A%7B%22TD%22%3A%7B%22T%22%3A%22%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0%22%7D%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D%7D%2C%22BUL%22%3A%5B%7B%22BU%22%3A%7B%22T%22%3A%22%EC%B0%B8%EA%B0%80%ED%95%98%EA%B8%B0%22%7D%2C%22L%22%3A%7B%22LPC%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22LMO%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D%7D%5D%7D%7D&template_args=%7B%22%24%7BIMAGE_WIDTH%7D%22%3A%22400%22%2C%22%24%7BIOS_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BIMAGE_URL%7D%22%3A%22http%3A%2F%2Fmud-kage.kakao.co.kr%2Fdn%2FQ2iNx%2FbtqgeRgV54P%2FVLdBs9cvyn8BJXB3o7N8UK%2Fkakaolink40_original.png%22%2C%22%24%7BIMAGE_COUNT%7D%22%3A%221%22%2C%22%24%7BFIRST_BUTTON_TITLE%7D%22%3A%22%EC%B0%B8%EA%B0%80%ED%95%98%EA%B8%B0%22%2C%22%24%7BDESCRIPTION%7D%22%3A%22%22%2C%22%24%7BSHARED_COUNT%7D%22%3A%22%22%2C%22%24%7BANDROID_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BFIRST_BUTTON_IOS_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BFIRST_BUTTON_MOBILE_WEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22%24%7BCOMMENT_COUNT%7D%22%3A%22%22%2C%22%24%7BSUBSCRIBER_COUNT%7D%22%3A%22%22%2C%22%24%7BIMAGE_HEIGHT%7D%22%3A%22400%22%2C%22%24%7BTITLE%7D%22%3A%22%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0%22%2C%22%24%7BMOBILE_WEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22%24%7BFIRST_BUTTON_ANDROID_EXECUTION_URL%7D%22%3A%22%22%2C%22%24%7BVIEW_COUNT%7D%22%3A%22%22%2C%22%24%7BWEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%2C%22%24%7BLIKE_COUNT%7D%22%3A%22%22%2C%22%24%7BFIRST_BUTTON_WEB_URL%7D%22%3A%22https%3A%2F%2Fteampe.co.kr%2Fteampe%2Findex.php%2FRoom%2Findex%2F1%22%7D&template_id=3139&extras=%7B%22KA%22%3A%22sdk%2F1.29.1%20os%2Fjavascript%20lang%2Fko-KR%20device%2FLinux_i686%20origin%2Fhttps%253A%252F%252Fteampe.co.kr%22%7D">려차</a>
-
-  <button id="authorize_button" style="display: none;">Authorize</button>
+  <!-- <button id="authorize_button" style="display: none;">Authorize</button>
     <button id="signout_button" style="display: none;">Sign Out</button>
-    <button id="click">click</button>
 
-    <pre id="content" style="white-space: pre-wrap;"></pre>
+    <pre id="content" style="white-space: pre-wrap;"></pre> -->
 
 
     <?php
@@ -330,7 +289,8 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
 
   <div class="chat_area"><div class="list"></div></div>
   <div class="footer">
-    <input class="chat_text" type="text" placeholder=" message..." name="" id="chat"><button class="ok_btn" id="go">보내기</button>
+    <input class="chat_text" type="text" placeholder=" message..." name="" id="chat"><button class="ok_btn" id="upload">+</button><button class="ok_btn" id="go">보내기</button>
+   
 
   </div>
 
@@ -363,7 +323,7 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
        *  On load, called to load the auth2 library and API client library.
        */
       function handleClientLoad() {
-        gapi.load('client:auth2', initClient);
+        // gapi.load('client:auth2', initClient);
       }
 
       /**
@@ -377,15 +337,9 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
           discoveryDocs: DISCOVERY_DOCS,
           scope: SCOPES
         }).then(function () {
-          // Listen for sign-in state changes.
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-          // Handle the initial sign-in state.
-          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-          authorizeButton.onclick = handleAuthClick;
-          signoutButton.onclick = handleSignoutClick;
+          updateSigninStatus(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token);
         }, function(error) {
-          appendPre(JSON.stringify(error, null, 2));
         });
       }
 
@@ -393,65 +347,19 @@ $result = uploadFile($token, $the_file_and_path, $mime_type, $new_name);
        *  Called when the signed in status changes, to update the UI
        *  appropriately. After a sign-in, the API is called.
        */
-      function updateSigninStatus(isSignedIn) {
+      function updateSigninStatus(token) {
+        var renewURL = location.href;
+        renewURL = renewURL + "?Authcode="+token;
+        //페이지 갱신 실행!
+        history.pushState(null, null, renewURL);
 
-        if (isSignedIn) {
-          
-          authorizeButton.style.display = 'none';
-          signoutButton.style.display = 'block';
-          listFiles();
-        } else {
-          authorizeButton.style.display = 'block';
-          signoutButton.style.display = 'none';
-        }
+        var url_string = window.location.href; //
+        var url = new URL(url_string);
+        window.access_token = url.searchParams.get("Authcode");
+        location.href = renewURL;
       }
 
-      /**
-       *  Sign in the user upon button click.
-       */
-      function handleAuthClick(event) {
-        gapi.auth2.getAuthInstance().signIn();
-      }
-
-      /**
-       *  Sign out the user upon button click.
-       */
-      function handleSignoutClick(event) {
-        gapi.auth2.getAuthInstance().signOut();
-      }
-
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node. Used to display the results of the API call.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
-      function appendPre(message) {
-        var pre = document.getElementById('content');
-        var textContent = document.createTextNode(message + '\n');
-        pre.appendChild(textContent);
-      }
-
-      /**
-       * Print files.
-       */
-      function listFiles() {
-        gapi.client.drive.files.list({
-          'pageSize': 10,
-          'fields': "nextPageToken, files(id, name)"
-        }).then(function(response) {
-          appendPre('Files:');
-          var files = response.result.files;
-          if (files && files.length > 0) {
-            for (var i = 0; i < files.length; i++) {
-              var file = files[i];
-              appendPre(file.name + ' (' + file.id + ')');
-            }
-          } else {
-            appendPre('No files found.');
-          }
-        });
-      }
+    
 
     </script>
 
@@ -475,17 +383,14 @@ function files_list (access_token) {
     fetch(drive_url, drive_request).then( response => {
         return(response.json());
     }).then( list =>  {
-      console.log(list.files);
+      // console.log(list.files);
       //https://drive.google.com/open?id=
         console.log("Found a file called "+list.files[0].name);
     });
 }
 
 
-  function openNav() {
-    $("#mySidenav").width( '200px' );
-    $(".sidenav_overlay").fadeIn();
-  }
+
 
 
 </script>
@@ -496,9 +401,9 @@ function files_list (access_token) {
         Kakao.Link.sendDefault({
         objectType: 'feed',
         content: {
-          title: '공유하기',
+          title: 'Teampe에 초대 받았습니다.',
           description: '',
-          imageUrl: 'http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+          imageUrl: 'https://teampe.co.kr/teampe/assets/images/share.jpg',
           link: {
            mobileWebUrl: site_url + '/Room/index/' + id,
             webUrl: site_url + '/Room/index/' + id
@@ -526,48 +431,96 @@ function files_list (access_token) {
 		$(".sidenav_overlay").fadeOut();
 	}
 
-  function closeNav() {
-    $("#mySidenav").width( '0' );
-    $(".sidenav_overlay").fadeOut();
-  }
+
 
 
     $(document).ready(function () {
 
- var url_string = window.location.href; //
-      var url = new URL(url_string);
-      var access_token = url.searchParams.get("Authcode");
-      if(access_token)
-        files_list(access_token);
 
 
-    $("#click").click(function(){
-        gapi.load('picker', {'callback': onPickerApiLoad});
+
+    var url_string = window.location.href; //
+    var url = new URL(url_string);
+    window.access_token = url.searchParams.get("Authcode");
+    if(window.access_token)
+      files_list(window.access_token);
+
+
+    var uploadbtn = $("#upload");
+
+	if (typeof window.HybridApp != 'undefined' && !window.access_token) {
+        uploadbtn.one( "click", function() {
+        	window.HybridApp.googleDriveLogin('<?=$this->session->userdata(SESSION_USR_ROOM)?>');
+	    });
+    }
+    else{
+      if(!window.access_token)
+        uploadbtn.click(function() {
+           gapi.load('client:auth2', initClient);
+        });
+     else{
+  	    try{
+  	        new AjaxUpload(uploadbtn,{
+  	            action: "<?=site_url('Base/ajax_img_upload')?>",
+  	            data : {token : window.access_token },
+  	            name: 'uploadfile',
+
+  	            onComplete: function (file, response) {
+                    if(response){
+                      if (typeof window.HybridApp != 'undefined')
+                      gapi.load('picker', {'callback': onPickerApiLoad});
+                    else{
+                      gapi.load('auth', {'callback': onAuthApiLoad});
+                      gapi.load('picker', {'callback': onPickerApiLoad_web});
+                      }
+                    }
+  	                // if(response == "error"){
+  	                //     toastr['error']("화일업로드시 오유가 발생하였습니다.", "오유");
+  	                //     return;
+  	                // }else{
+  	                //     var data = JSON.parse(response);
+  	                //     if(data.result=='ok'){
+  	                //         $("#hid_delegate_img").val(data.filename);
+  	                //         $("#img_delegate").attr("src",data.fileurl+'/'+data.filename);
+  	                //     }
+  	                //     else if(response == 'no_file'){
+  	                //         toastr['warning']("화일이 존재하지 않습니다.", "경고");
+  	                //         return;
+  	                //     }
+  	                // }
+  	            }
+  	        });
+  	    }catch (e){
+  	        alert(e);
+  	    }
+      }
+    }
+
+
+
+
+    $(".material-icons.pi").click(function(){
+          event.stopPropagation();
+          kakao_share('<?=$현재방->uid?>');
     });
+	  
+	  
+    $("#go").click(function(){ // 대화 보내기
+      var today = new Date();
+      var y = today.getFullYear();
+      var Month = ("0" + (today.getMonth() + 1)).slice(-2) ;
+      var d = ("0" + today.getDate()).slice(-2) ;
+      var h = ("0" + today.getHours()).slice(-2) ;
+      var m = ("0" + today.getMinutes()).slice(-2) ;
+      var s = ("0" + today.getSeconds()).slice(-2) ;
+      var timestamp = y + "-" + Month  + "-" + d + "-" + h + ":" + m + ":" + s;
 
+      var ref_data = '<?=$현재방->uid?>/'+timestamp+'/'+escape("<?=$this->session->userdata(SESSION_USR_NAME)?>");
 
-      $(".material-icons.pi").click(function(){
-            event.stopPropagation();
-            kakao_share('<?=$현재방->uid?>');
-      });
-	    
-	    
-      $("#go").click(function(){ // 대화 보내기
-        var today = new Date();
-        var y = today.getFullYear();
-        var Month = ("0" + (today.getMonth() + 1)).slice(-2) ;
-        var d = ("0" + today.getDate()).slice(-2) ;
-        var h = ("0" + today.getHours()).slice(-2) ;
-        var m = ("0" + today.getMinutes()).slice(-2) ;
-        var s = ("0" + today.getSeconds()).slice(-2) ;
-        var timestamp = y + "-" + Month  + "-" + d + "-" + h + ":" + m + ":" + s;
+      database.ref(ref_data).set(escape($("#chat").val()));
+      $("#chat").val("");
 
-        var ref_data = '<?=$현재방->uid?>/'+timestamp+'/'+escape("<?=$this->session->userdata(SESSION_USR_NAME)?>");
-
-        database.ref(ref_data).set(escape($("#chat").val()));
-        $("#chat").val("");
-
-      });
+    });
 
 
       var starCountRef = firebase.database().ref('<?=$현재방->uid?>/').orderByKey();
@@ -579,34 +532,47 @@ function files_list (access_token) {
           // console.log(childKey,childData);
 
         for(var k in childData) {
-		share_data = unescape(childData[k]);
-          if(share_data.includes("share://")){
+		      share_data = unescape(childData[k]);
+          if(share_data.includes("google_share://")){
+
+            origin_data = share_data.split("google_share://");
+            str = "<div class='share_href'>"+ "<a class='kakao_place' href = "+origin_data[1]+">"+origin_data[1]+"</a>";
+            if(unescape(k) =="<?=$this->session->userdata(SESSION_USR_NAME)?>")
+                    temp = "<div class='chat1'>"+str+ "</div>";
+                  else
+                    temp = "<div class='chat2'>"+unescape(k) + " : "+str+"</div>";
+             $(".list").append(temp);
+          }
+          else if(share_data.includes("share://")){
             origin_data = share_data.split("share://");
             origin_data = origin_data[1].split(",");
-            console.log(origin_data);
+            // console.log(origin_data);
             var img_tag_src = origin_data[3];
             if (typeof window.HybridApp != 'undefined') {
                 img_tag_src.replace(/%/gi, "%25");
             }
-            str = "<br>"+ "<a class='kakao_place' href = "+origin_data[0]+">"+origin_data[0]+"</a>" + "<br>" + origin_data[1] +"<br>" + origin_data[2] + '<img style = "width:250px" src="'+img_tag_src+'">';
-            $(".list").append(unescape(k) + " : "+str + "<br>");
-          }
-	else{
-          if(unescape(k) =="<?=$this->session->userdata(SESSION_USR_NAME)?>")
-            temp = "<div class='chat1'>"+share_data+ "</div>";
+            str = "<div class='share_href'>"+ "<a class='kakao_place' href = "+origin_data[0]+">"+origin_data[0]+"</a>" + "</div><div class='share_place_name'>" + origin_data[1] +"</div><div class='share_place_address'>" + origin_data[2] + '</div><img style = "width:250px" src="'+img_tag_src+'">';
+
+            if(unescape(k) =="<?=$this->session->userdata(SESSION_USR_NAME)?>")
+            temp = "<div class='chat1'>"+str+ "</div>";
           else
-            temp = "<div class='chat2'>"+unescape(k) + " : "+share_data+"</div>";
-	}
-          console.log(temp);
-          $(".list").append(temp);
+            temp = "<div class='chat2'>"+unescape(k) + " : "+str+"</div>";
+
+            $(".list").append(temp);
+          }
+        	else{
+                  if(unescape(k) =="<?=$this->session->userdata(SESSION_USR_NAME)?>")
+                    temp = "<div class='chat1'>"+share_data+ "</div>";
+                  else
+                    temp = "<div class='chat2'>"+unescape(k) + " : "+share_data+"</div>";
+                  $(".list").append(temp);
+        	}
+          
         }
+$('.list').scrollTop($('.list')[0].scrollHeight);
       });
     });
 
-    $(".kakao_place").click(function(){
-      alert($(this).attr("href"));
-    });
-       	
 
   });
 

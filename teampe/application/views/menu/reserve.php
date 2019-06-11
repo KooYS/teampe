@@ -70,6 +70,47 @@ url(../../../assets/font/NanumGothicBold.ttf) format('truetype');
       animation: spin 2s linear infinite;
     }
 
+    .material-icons.bi{
+    color: #ffffff;
+    font-size: 20px;
+    right: 10%;
+    bottom: 40%;
+    position: absolute;
+	}
+
+    .material-icons.home{
+      color: #ffffff;
+      font-size: 20px;
+      right: 20%;
+      bottom: 40%;
+      position: absolute;
+    
+    }
+	
+	.pro_img{
+	    border-radius: 50%;
+	    margin-left: 10px;
+	    width: 60px;
+	    border: solid;
+	    border-color: #ffffff;
+	    margin:15px;
+	}
+	.schedule_name{
+      font-size: 20px;
+      bottom: 35%;
+      position: absolute;
+      color: #ffffff;
+      text-align: center;
+      margin-left: 45%;
+    }
+
+    .r_hr{
+
+    	width: 95%;
+  		height: 2px ;
+  		background: #315bb0 ;
+    }
+
     /* Safari */
     @-webkit-keyframes spin {
       0% { -webkit-transform: rotate(0deg); }
@@ -86,9 +127,38 @@ url(../../../assets/font/NanumGothicBold.ttf) format('truetype');
 </style>
 
 <link rel="stylesheet" type="text/css" href="https://library.cau.ac.kr/assets/css/main.css?sv=2019.4.25.14">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+<div class="profile">
+  <div class="sidenav_overlay" onclick="closeNav()"></div>
+  <div id="mySidenav" class="sidenav">
+  	<span class="room_name"><?=$현재방->name?></span>
+    <hr class="r_hr">
+    <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/2">팀플룸</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
+    <hr class="r_hr">
+    <p class="conv">대화참여자</p>
+    <?php
+    foreach ($participant as $key => $value) {
 
+      echo '<div class="part_name">'.'<img class="pro_img1" src="'.$value->image.'">';
+      echo $value->name.'</div>';
+    
+    }
 
+    ?>
+  </div>
+  
+
+    <i class="material-icons menu" onclick="openNav()">menu</i>
+    <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
+    <div class="schedule_name"><p>팀플룸</p></div>
+    <a onclick="location.href='<?=base_url()?>index.php/Main'"><i class="material-icons home">home</i></a>
+    <a onclick="location.href='<?=base_url()?>index.php/Room/index/'+<?=$this->session->userdata(SESSION_USR_ROOM)?>"><i class="material-icons bi">chat</i></a>
+  </div>
 
 
 
@@ -152,7 +222,7 @@ url(../../../assets/font/NanumGothicBold.ttf) format('truetype');
 		    	?>
 		</tbody>
 	</table>
-	<button onclick="window.open('https://library.cau.ac.kr/#/smuf/room/group-study/<?=$roomNum?>/reserve?hopeDate=<?=$date?>')">예약하기</button>
+	<button onclick="reserve('https://library.cau.ac.kr/#/smuf/room/group-study/<?=$roomNum?>/reserve?hopeDate=<?=$date?>&redirect='+window.location.href)">예약하기</button>
 	<?php }?>
 	</div>
 
@@ -243,7 +313,18 @@ function scrollPrevent(flag){
 
 }
 
+function reserve(url){
+	if (typeof window.HybridApp != 'undefined') {
+        window.location.href = url;
+    }
+    else
+    	window.location.href = url;
+	}
+
 $(document).ready(function () {
+
+
+	
 
 	for (var i = 0; i < 8; i++) {
 		var day = new Date();
@@ -300,8 +381,8 @@ $(document).ready(function () {
 					}
 					str += "</tbody>";
 					str += "</table>";
-					url = "window.open('https://library.cau.ac.kr/#/smuf/room/group-study/"+i+"/reserve?hopeDate="+data['day']+"')";
-					str += "<button onclick="+url+">예약하기</button>";
+					url = "https://library.cau.ac.kr/#/smuf/room/group-study/"+i+"/reserve?hopeDate="+data['day']+"&redirect="+window.location.href;
+					str += "<button onclick='reserve("+url+")'>예약하기</button>";
 	
 
 

@@ -1,4 +1,5 @@
 <?php
+
 $this->load->database();
 ?>
 
@@ -20,6 +21,14 @@ $this->load->database();
     bottom: 40%;
     position: absolute;
 }
+.material-icons.home{
+  color: #ffffff;
+  font-size: 20px;
+  right: 20%;
+  bottom: 40%;
+  position: absolute;
+
+}
 
 .pro_img{
     border-radius: 50%;
@@ -38,14 +47,36 @@ $this->load->database();
   text-align: center;
   margin-left: 44%;
 }
-
-.todo_p{
+.todo_maker{
   font-size: 15px;
   font-family: NotoSansKr-Regular;
   color: #0a85d7;
   position: absolute;
   top: 20%;
-  right: 90%;
+  right: 85%;
+  transform: translate(40%,-40%);
+}
+
+.maker_input{
+  font-size: 15px;
+  font-family: NotoSansKr-Regular;
+  color: #0a85d7;
+  position: absolute;
+  top: 25%;
+  right: 50%;
+  transform: translate(50%,-50%);
+  border: none;
+  border-bottom: 2px solid #3556ab;
+  border-bottom-color: #3556ab;
+  width: 80%;
+}
+.todo_p{
+  font-size: 15px;
+  font-family: NotoSansKr-Regular;
+  color: #0a85d7;
+  position: absolute;
+  top: 25%;
+  right: 87%;
   transform: translate(40%,-40%);
 }
 
@@ -54,8 +85,8 @@ $this->load->database();
   font-family: NotoSansKr-Regular;
   color: #0a85d7;
   position: absolute;
-  top: 25%;
-  right: 53%;
+  top: 30%;
+  right: 50%;
   transform: translate(50%,-50%);
   border: none;
   border-bottom: 2px solid #3556ab;
@@ -68,8 +99,8 @@ $this->load->database();
   font-family: NotoSansKr-Regular;
   color: #0a85d7;
   position: absolute;
-  top: 35%;
-  right: 90%;
+  top: 40%;
+  right: 87%;
   transform: translate(40%,-40%);
 }
 
@@ -78,8 +109,8 @@ $this->load->database();
   font-family: NotoSansKr-Regular;
   color: #0a85d7;
   position: absolute;
-  top: 40%;
-  right: 53%;
+  top: 45%;
+  right: 50%;
   transform: translate(50%,-50%);
   border: none;
   border-bottom: 2px solid #3556ab;
@@ -99,8 +130,8 @@ input::placeholder{
   font-family: NotoSansKr-Regular;
   color: #0a85d7;
   position: absolute;
-  top: 50%;
-  right: 88%;
+  top: 55%;
+  right: 84%;
   transform: translate(40%,-40%);
 }
 
@@ -109,8 +140,8 @@ input::placeholder{
   font-family: NotoSansKr-Regular;
   color: #0a85d7;
   position: absolute;
-  top: 49.7%;
-  right: 60%;
+  top: 54.5%;
+  right: 55%;
   transform: translate(50%,-50%);
   border: none;
 }
@@ -166,7 +197,7 @@ input::placeholder{
     fd.append('date1', date1);
     axios({
       method: 'post',
-      url: '/test2/teampe/teampe/index.php/MyFunction/updateTodolist',
+      url: '/teampe/index.php/MyFunction/updateTodolist',
       data: fd
     });
 
@@ -178,24 +209,32 @@ input::placeholder{
   <div class="profile">
   <div class="sidenav_overlay" onclick="closeNav()"></div>
   <div id="mySidenav" class="sidenav">
+    <span class="room_name"><?=$현재방->name?></span>
     <hr>
     <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
-    <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
+    <a href="<?=base_url()?>index.php/MyFunction/index/2">팀플룸</a>
     <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
     <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
     <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
-    <a href="<?=base_url()?>index.php/MyFunction/index/6">자료공유</a>
     <hr>
     <p class="conv">대화참여자</p>
-    <img class="pro_img1" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
-    <span class="part_name"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
+    <?php
+    foreach ($participant as $key => $value) {
+
+      echo '<div class="part_name">'.'<img class="pro_img1" src="'.$value->image.'">';
+      echo $value->name.'</div>';
+    
+    }
+
+    ?>
   </div>
   
 
     <i class="material-icons menu" onclick="openNav()">menu</i>
     <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
     <div class="schedule_name"><p>ToDoList</p></div>
-    <a href="javascript:history.back()"><i class="material-icons bi">keyboard_backspace</i></a>
+    <a onclick="location.href='<?=base_url()?>index.php/Main'"><i class="material-icons home">home</i></a>
+    <a onclick="location.href='<?=base_url()?>index.php/Room/index/'+<?=$this->session->userdata(SESSION_USR_ROOM)?>"><i class="material-icons bi">chat</i></a>
   </div>
 
   <div class="content_wrap">

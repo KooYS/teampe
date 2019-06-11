@@ -16,9 +16,12 @@ class Login extends Base
     public function index()
     {
         $data["roomNum"] = $this->input->get('roomNum');
+        if(!isset($data["roomNum"]))
+            if($this->session->has_userdata(SESSION_USR_ID))
+                redirect('Main');
+
         $this->load_view('login',$data);
     }
-
     public function kakao_login()
     {
         $returnCode = $_GET["code"]; // 서버로 부터 토큰을 발급받을 수 있는 코드를 받아옵니다
@@ -95,14 +98,27 @@ class Login extends Base
             SESSION_USR_IMG => $img
         );
         $this->session->set_userdata($session_array);
-        $usrdata = array(
-            'id' => $id,
-            'name' => $name,
-        );
-        var_dump($this->usrModel->get_where(array('id' => $id)));
-        var_dump("test");
-        if($this->usrModel->get_where(array('id' => $id))->row() == null)
+
+        if(!$this->session->has_userdata('token'))
+            $usrdata = array(
+                'id' => $id,
+                'name' => $name,
+                'image' => $img,
+            );
+        else
+            $usrdata = array(
+                'id' => $id,
+                'name' => $name,
+                'image' => $img,
+                'token' => $this->session->userdata('token'),
+            );
+        // var_dump($this->usrModel->get_where(array('id' => $id)));
+        // var_dump("test");
+        $usr = $this->usrModel->get_where(array('id' => $id))->row();
+        if($usr == null)
             $this->usrModel->save($usrdata);
+        else
+            $this->usrModel->save($usrdata,$usr->uid);
 
         $type = $this->input->get('state');
 

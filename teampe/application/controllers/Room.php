@@ -14,6 +14,7 @@ class Room extends Base
 
     public function index($id)
     {
+
         $data['token'] = $this->input->get("Authcode");
         $data['refreshToken'] = $this->input->get("Refreshtoken");
         $data["현재방"] = $this->roomModel->getRow($id);
@@ -23,6 +24,7 @@ class Room extends Base
         }
         else{
             $participant = explode(",", $data["현재방"]->participant);
+            $this->session->set_userdata(array(SESSION_USR_ROOM => $id));
             if(!in_array($this->session->userdata(SESSION_USR_ID), $participant)){
 
                 if($data["현재방"]->participant == "")
@@ -31,7 +33,11 @@ class Room extends Base
                     $this->roomModel->save(array('participant' => $data["현재방"]->participant.",".$this->session->userdata(SESSION_USR_ID)),$id);
             }
         }
+        $data["participant"] = $this->get_participant($this->session->userdata(SESSION_USR_ROOM));
         $data["현재방"] = $this->roomModel->getRow($id);
+
+
+        
         $this->load_view('room', $data);
     }
 

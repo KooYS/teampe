@@ -1,6 +1,4 @@
 <?php
-
-// var_dump($room)
 ?>
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
@@ -15,11 +13,11 @@
     }
     .pro_img {
         border-radius: 50%;
-        margin-left: 10px;
+        margin: 15px;
         width: 60px;
         border: solid;
         border-color: #ffffff;
-        margin:15px;
+
     }
     .profile .nickname {
         color: #ffffff;
@@ -28,6 +26,7 @@
         transform: translate(50%,-50%);
         position: absolute;
         font-family: NotoSansKR;
+        font-size: 15px;
     }
 
     .make_btn_wrap {
@@ -128,6 +127,20 @@
  
     }
 
+    .room_wrap .pro_img2{
+        position: relative;
+        border-radius: 50%;
+        width: 20px;
+        margin : 2px;
+        
+
+    }
+    .room_wrap .pro_img2_wrap{
+        position: relative;
+        display: inline;
+        margin-left: 35%;
+    }
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
@@ -138,21 +151,7 @@
 
 
 <div class="profile">
-    <div class="sidenav_overlay" onclick="closeNav()"></div>
-    <div id="mySidenav" class="sidenav">
-        <p class="menuP">메뉴</p>
-        <hr>
-        <a href="<?=base_url()?>index.php/MyFunction/index/1">시간표</a>
-        <a href="<?=base_url()?>index.php/MyFunction/index/2">빈강의실</a>
-        <a href="<?=base_url()?>index.php/MyFunction/index/3">장소추천</a>
-        <a href="<?=base_url()?>index.php/MyFunction/index/4">ToDoList</a>
-        <a href="<?=base_url()?>index.php/MyFunction/index/5">회의록</a>
-        <a href="<?=base_url()?>index.php/MyFunction/index/6">자료공유</a>
-        <hr>
-    </div>
-
-    <i class="material-icons menu" onclick="openNav()">menu</i>
-
+    
     <img class="pro_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
     <span class="nickname"><?=$this->session->userdata(SESSION_USR_NAME)?></span>
     <i class="material-icons ni">notifications_none</i>
@@ -170,6 +169,20 @@
         <span class="room_name"><?=$val->name?></span>
         <a class="kakao-link-btn" data-id="<?=$val->uid?>">
         <img class="room_img" src="<?=$this->session->userdata(SESSION_USR_IMG)?>">
+        <div class="pro_img2_wrap">
+        <?php
+        foreach ($participant as $key => $value) {
+            if($val->uid == $value[0]){
+                foreach ($value as $key => $img)
+                    if($key > 0)
+                        echo '<img class="pro_img2" src="'.$img->image.'">';
+            }
+            else
+                continue;
+        }
+        ?>
+        </div>
+        
         </a>
     </div>
 
@@ -184,16 +197,6 @@
 
 
 <script>
-
-    function openNav() {
-        $("#mySidenav").width( '200px' );
-        $(".sidenav_overlay").fadeIn();
-    }
-
-    function closeNav() {
-        $("#mySidenav").width( '0' );
-        $(".sidenav_overlay").fadeOut();
-    }
 
     Kakao.init('3db0ef82cfa5221c3278986f53496948');
     function kakao_share(id){

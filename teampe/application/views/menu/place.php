@@ -17,6 +17,7 @@
 
 
     function share(url,title,description,img){
+        alert('채팅방에 공유되었습니다.');
         var today = new Date();
         var y = today.getFullYear();
         var Month = ("0" + (today.getMonth() + 1)).slice(-2) ;
@@ -27,10 +28,11 @@
         var timestamp = y + "-" + Month  + "-" + d + "-" + h + ":" + m + ":" + s;
 
         // 세션 추가
-        var ref_data = '1/'+timestamp+'/'+escape("<?=$this->session->userdata(SESSION_USR_NAME)?>");
+        var ref_data = '<?=$this->session->userdata(SESSION_USR_ROOM)?>/'+timestamp+'/'+escape("<?=$this->session->userdata(SESSION_USR_NAME)?>");
 
         palce_url = "share://" + url + "," + title + "," + description + "," + img;
         database.ref(ref_data).set(escape(palce_url));
+        
         // console.log(title,description,img);
     }
 
@@ -41,10 +43,6 @@
             data : {url : place.place_url},
             success : function(res){
                 var data = JSON.parse(res);
-                $("#data").empty();
-                $("#data").append(data['title']);
-                $("#data").append(data['description']);
-                $("#data").append("<img style='width:100%; height=200px;'src='"+data['image']+"'>");
                 fucntionstr = "share('"+place.place_url+"','"+data['title']+"','"+data['description']+"','"+data['image']+"')";
                 var content = '<div class="placeinfo">' +
                         '   <a class="title" href="' + place.place_url + '" target="" title="' + place.place_name + '">' + place.place_name + '</a>';   
@@ -76,6 +74,9 @@
 
     $(document).ready(function () {
 
+        if($("#keyword_for_map").val() != ""){
+            ps.keywordSearch($("#keyword_for_map").val(), placesSearch_keyword); 
+        }
         
 
         // 키워드 검색 완료 시 호출되는 콜백함수 입니다

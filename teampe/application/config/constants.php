@@ -94,9 +94,10 @@ defined('SESSION_USR_UID')      OR define('SESSION_USR_UID', 'session_usr_uid');
 defined('SESSION_USR_ID')      OR define('SESSION_USR_ID', 'session_usr_id');
 defined('SESSION_USR_NAME')      OR define('SESSION_USR_NAME', 'session_usr_name');
 defined('SESSION_USR_IMG')      OR define('SESSION_USR_IMG', 'session_usr_img');
+defined('SESSION_USR_ROOM')      OR define('SESSION_USR_ROOM', 'session_usr_room');
 
 
-defined('UPLOAD_PATH')                  OR define('UPLOAD_PATH', dirname(__DIR__) . "/../../upload/");   // upload dir path
+defined('UPLOAD_PATH')                  OR define('UPLOAD_PATH', dirname(__DIR__) . "/../../upload");   // upload dir path
 
 
 defined('STATUS_USE')           OR  define('STATUS_USE',1);
